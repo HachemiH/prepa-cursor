@@ -20,7 +20,7 @@
    - [x] Configuration de TypeScript
    - [x] Configuration de ESLint
    - [x] Configuration de Prettier
-   - [ ] Configuration de Vitest pour les tests unitaires en local
+   - [x] Configuration de Vitest pour les tests unitaires en local
    - [ ] Configuration de Playwright pour les tests E2E en local
 
 2. Configuration de l'Environnement
