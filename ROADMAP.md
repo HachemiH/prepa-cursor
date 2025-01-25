@@ -21,7 +21,7 @@
    - [x] Configuration de ESLint
    - [x] Configuration de Prettier
    - [x] Configuration de Vitest pour les tests unitaires en local
-   - [ ] Configuration de Playwright pour les tests E2E en local
+   - [x] Configuration de Playwright pour les tests E2E en local
 
 2. Configuration de l'Environnement
    - [ ] Configuration des variables d'environnement
