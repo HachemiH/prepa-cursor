@@ -34,18 +34,18 @@
    - [x] Configuration de Redis
 
 3. Scripts de Base
-   - [ ] Scripts PNPM
-     - [ ] build
-     - [ ] dev
-     - [ ] test:unit (exécution locale avec Vitest)
-     - [ ] test:e2e (exécution locale avec Playwright)
-     - [ ] test:coverage (rapport de couverture local)
-     - [ ] lint
-     - [ ] format
-   - [ ] Scripts Base de données
-     - [ ] cleanup
-     - [ ] migrate
-     - [ ] seed
+   - [x] Scripts PNPM
+     - [x] build
+     - [x] dev
+     - [x] test:unit (exécution locale avec Vitest)
+     - [x] test:e2e (exécution locale avec Playwright)
+     - [x] test:coverage (rapport de couverture local)
+     - [x] lint
+     - [x] format
+   - [x] Scripts Base de données
+     - [x] cleanup
+     - [x] migrate
+     - [x] seed
 
 4. Documentation
    - [ ] Guide d'installation
