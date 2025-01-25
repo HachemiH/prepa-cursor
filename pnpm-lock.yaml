@@ -84,8 +84,11 @@ importers:
         specifier: ^5.1.1
         version: 5.1.1
       cache-manager:
-        specifier: ^6.0.0
+        specifier: ^6.4.0
         version: 6.4.0
+      cache-manager-redis-store:
+        specifier: ^3.0.1
+        version: 3.0.1
       class-transformer:
         specifier: ^0.5.1
         version: 0.5.1
@@ -117,7 +120,7 @@ importers:
         specifier: ^8.11.3
         version: 8.13.1
       redis:
-        specifier: ^4.6.13
+        specifier: ^4.7.0
         version: 4.7.0
       reflect-metadata:
         specifier: ^0.2.1
@@ -1693,6 +1696,10 @@ packages:
   cac@6.7.14:
     resolution: {integrity: sha512-b6Ilus+c3RrdDk+JhLKUAQfzzgLEPy6wcXqS7f/xe1EETvsDP6GORG7SFuOs6cID5YkqchW/LXZbX5bc8j7ZcQ==}
     engines: {node: '>=8'}
+
+  cache-manager-redis-store@3.0.1:
+    resolution: {integrity: sha512-o560kw+dFqusC9lQJhcm6L2F2fMKobJ5af+FoR2PdnMVdpQ3f3Bz6qzvObTGyvoazQJxjQNWgMQeChP4vRTuXQ==}
+    engines: {node: '>= 16.18.0'}
 
   cache-manager@6.4.0:
     resolution: {integrity: sha512-eUmPyVqQYzWCt7hx1QrYzQ7oC3MGKM1etxxe8zuq1o7IB4NzdBeWcUGDSWYahaI8fkd538SEZRGadyZWQfvOzQ==}
@@ -5375,6 +5382,10 @@ snapshots:
       ieee754: 1.2.1
 
   cac@6.7.14: {}
+
+  cache-manager-redis-store@3.0.1:
+    dependencies:
+      redis: 4.7.0
 
   cache-manager@6.4.0:
     dependencies:

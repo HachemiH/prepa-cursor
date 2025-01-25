@@ -31,7 +31,7 @@
    - [x] Configuration de la base de données PostgreSQL
      - [x] Création de la base de données
      - [x] Configuration de TypeORM
-   - [ ] Configuration de Redis
+   - [x] Configuration de Redis
 
 3. Scripts de Base
    - [ ] Scripts PNPM
