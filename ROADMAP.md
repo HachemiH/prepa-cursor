@@ -20,22 +20,24 @@
    - [ ] Configuration de TypeScript
    - [ ] Configuration de ESLint
    - [ ] Configuration de Prettier
-   - [ ] Configuration de Vitest
-   - [ ] Configuration de Playwright
+   - [ ] Configuration de Vitest pour les tests unitaires en local
+   - [ ] Configuration de Playwright pour les tests E2E en local
 
 2. Configuration de l'Environnement
    - [ ] Configuration des variables d'environnement
      - [ ] Création du fichier .env
      - [ ] Création du fichier .env.example
      - [ ] Documentation des variables d'environnement
-   - [ ] Configuration de la base de données locale pour le développement
-   - [ ] Configuration de Redis local pour le développement
+   - [ ] Configuration de la base de données locale pour les tests
+   - [ ] Configuration de Redis local pour les tests
 
 3. Scripts de Base
    - [ ] Scripts PNPM
      - [ ] build
      - [ ] dev
-     - [ ] test
+     - [ ] test:unit (exécution locale avec Vitest)
+     - [ ] test:e2e (exécution locale avec Playwright)
+     - [ ] test:coverage (rapport de couverture local)
      - [ ] lint
      - [ ] format
    - [ ] Scripts Base de données
@@ -48,6 +50,10 @@
    - [ ] Documentation de configuration
    - [ ] Documentation des scripts disponibles
    - [ ] Documentation des conventions de code
+   - [ ] Documentation des tests
+     - [ ] Guide des tests unitaires
+     - [ ] Guide des tests E2E
+     - [ ] Guide de la couverture de code
 
 #### ⚪️ v0.0.2 : Configuration Docker Development
 **Description:** Mise en place de l'environnement Docker pour le développement
@@ -69,7 +75,6 @@
 
 2. Scripts Docker
    - [ ] docker-compose up development
-   - [ ] docker-compose up test
    - [ ] docker-compose down
 
 3. Documentation Docker
