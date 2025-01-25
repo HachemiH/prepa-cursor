@@ -16,7 +16,7 @@
 **Description:** Configuration initiale du projet
 
 1. Configuration du Projet
-   - [ ] Installation des dépendances via PNPM
+   - [x] Installation des dépendances via PNPM
    - [ ] Configuration de TypeScript
    - [ ] Configuration de ESLint
    - [ ] Configuration de Prettier
