@@ -48,14 +48,14 @@
      - [x] seed
 
 4. Documentation
-   - [ ] Guide d'installation
-   - [ ] Documentation de configuration
-   - [ ] Documentation des scripts disponibles
-   - [ ] Documentation des conventions de code
-   - [ ] Documentation des tests
-     - [ ] Guide des tests unitaires
-     - [ ] Guide des tests E2E
-     - [ ] Guide de la couverture de code
+   - [x] Guide d'installation
+   - [x] Documentation de configuration
+   - [x] Documentation des scripts disponibles
+   - [x] Documentation des conventions de code
+   - [x] Documentation des tests
+     - [x] Guide des tests unitaires
+     - [x] Guide des tests E2E
+     - [x] Guide de la couverture de code
 
 #### ⚪️ v0.0.2 : Configuration Docker Development
 **Description:** Mise en place de l'environnement Docker pour le développement
