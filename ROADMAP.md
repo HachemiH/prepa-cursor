@@ -17,7 +17,7 @@
 
 1. Configuration du Projet
    - [x] Installation des dépendances via PNPM
-   - [ ] Configuration de TypeScript
+   - [x] Configuration de TypeScript
    - [ ] Configuration de ESLint
    - [ ] Configuration de Prettier
    - [ ] Configuration de Vitest pour les tests unitaires en local
