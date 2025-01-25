@@ -19,7 +19,7 @@
     "migration:run": "pnpm typeorm migration:run -d src/core/config/database/typeorm-migrations.config.ts",
     "migration:revert": "pnpm typeorm migration:revert -d src/core/config/database/typeorm-migrations.config.ts",
     "test": "vitest run",
-    "test:watch": "vitest",
+    "test:watch": "vitest watch",
     "test:coverage": "vitest run --coverage",
     "test:e2e": "pnpm exec playwright test --config test/e2e/config.ts",
     "test:all": "pnpm lint && pnpm test || exit 0",
