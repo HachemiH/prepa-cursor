@@ -28,8 +28,10 @@
      - [x] Création du fichier .env
      - [x] Création du fichier .env.example
      - [x] Documentation des variables d'environnement
-   - [ ] Configuration de la base de données locale pour les tests
-   - [ ] Configuration de Redis local pour les tests
+   - [ ] Configuration de la base de données PostgreSQL
+     - [ ] Création de la base de données
+     - [ ] Configuration de TypeORM
+   - [ ] Configuration de Redis
 
 3. Scripts de Base
    - [ ] Scripts PNPM
