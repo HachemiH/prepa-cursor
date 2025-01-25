@@ -52,10 +52,7 @@
 #### ⚪️ v0.0.2 : Configuration Docker Development
 **Description:** Mise en place de l'environnement Docker pour le développement
 
-1. Installation des Outils
-   - [ ] Installation de Docker et Docker Compose
-
-2. Configuration des Conteneurs
+1. Configuration des Conteneurs
    - [ ] Dockerfile pour l'API NestJS
      - [ ] Configuration du hot reload
      - [ ] Configuration des volumes
@@ -70,12 +67,12 @@
      - [ ] Configuration des volumes
      - [ ] Configuration des variables d'environnement
 
-3. Scripts Docker
+2. Scripts Docker
    - [ ] docker-compose up development
    - [ ] docker-compose up test
    - [ ] docker-compose down
 
-4. Documentation Docker
+3. Documentation Docker
    - [ ] Guide d'installation avec Docker
    - [ ] Documentation de la configuration Docker
    - [ ] Documentation des commandes Docker utiles
