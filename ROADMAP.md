@@ -18,7 +18,7 @@
 1. Configuration du Projet
    - [x] Installation des dépendances via PNPM
    - [x] Configuration de TypeScript
-   - [ ] Configuration de ESLint
+   - [x] Configuration de ESLint
    - [ ] Configuration de Prettier
    - [ ] Configuration de Vitest pour les tests unitaires en local
    - [ ] Configuration de Playwright pour les tests E2E en local
