@@ -28,9 +28,9 @@
      - [x] Création du fichier .env
      - [x] Création du fichier .env.example
      - [x] Documentation des variables d'environnement
-   - [ ] Configuration de la base de données PostgreSQL
-     - [ ] Création de la base de données
-     - [ ] Configuration de TypeORM
+   - [x] Configuration de la base de données PostgreSQL
+     - [x] Création de la base de données
+     - [x] Configuration de TypeORM
    - [ ] Configuration de Redis
 
 3. Scripts de Base
