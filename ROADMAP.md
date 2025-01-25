@@ -24,10 +24,10 @@
    - [x] Configuration de Playwright pour les tests E2E en local
 
 2. Configuration de l'Environnement
-   - [ ] Configuration des variables d'environnement
-     - [ ] Création du fichier .env
-     - [ ] Création du fichier .env.example
-     - [ ] Documentation des variables d'environnement
+   - [x] Configuration des variables d'environnement
+     - [x] Création du fichier .env
+     - [x] Création du fichier .env.example
+     - [x] Documentation des variables d'environnement
    - [ ] Configuration de la base de données locale pour les tests
    - [ ] Configuration de Redis local pour les tests
 
