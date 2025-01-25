@@ -10,6 +10,76 @@
 
 ## Version 0.x.x (Développement MVP)
 
+### Phase 0 - Installation et Configuration
+
+#### ⚪️ v0.0.1 : Setup Initial
+**Description:** Configuration initiale du projet
+
+1. Configuration du Projet
+   - [ ] Installation des dépendances via PNPM
+   - [ ] Configuration de TypeScript
+   - [ ] Configuration de ESLint
+   - [ ] Configuration de Prettier
+   - [ ] Configuration de Vitest
+   - [ ] Configuration de Playwright
+
+2. Configuration de l'Environnement
+   - [ ] Configuration des variables d'environnement
+     - [ ] Création du fichier .env
+     - [ ] Création du fichier .env.example
+     - [ ] Documentation des variables d'environnement
+   - [ ] Configuration de la base de données locale pour le développement
+   - [ ] Configuration de Redis local pour le développement
+
+3. Scripts de Base
+   - [ ] Scripts PNPM
+     - [ ] build
+     - [ ] dev
+     - [ ] test
+     - [ ] lint
+     - [ ] format
+   - [ ] Scripts Base de données
+     - [ ] cleanup
+     - [ ] migrate
+     - [ ] seed
+
+4. Documentation
+   - [ ] Guide d'installation
+   - [ ] Documentation de configuration
+   - [ ] Documentation des scripts disponibles
+   - [ ] Documentation des conventions de code
+
+#### ⚪️ v0.0.2 : Configuration Docker Development
+**Description:** Mise en place de l'environnement Docker pour le développement
+
+1. Installation des Outils
+   - [ ] Installation de Docker et Docker Compose
+
+2. Configuration des Conteneurs
+   - [ ] Dockerfile pour l'API NestJS
+     - [ ] Configuration du hot reload
+     - [ ] Configuration des volumes
+   - [ ] Dockerfile pour PostgreSQL
+     - [ ] Configuration des volumes pour la persistance
+     - [ ] Configuration des variables d'environnement
+   - [ ] Dockerfile pour Redis
+     - [ ] Configuration des volumes pour la persistance
+   - [ ] Docker Compose pour l'environnement de développement
+     - [ ] Configuration des services (API, PostgreSQL, Redis)
+     - [ ] Configuration des réseaux
+     - [ ] Configuration des volumes
+     - [ ] Configuration des variables d'environnement
+
+3. Scripts Docker
+   - [ ] docker-compose up development
+   - [ ] docker-compose up test
+   - [ ] docker-compose down
+
+4. Documentation Docker
+   - [ ] Guide d'installation avec Docker
+   - [ ] Documentation de la configuration Docker
+   - [ ] Documentation des commandes Docker utiles
+
 ### Phase 1 - Infrastructure de Base
 
 #### ⚪️ v0.1.0 : Configuration Base de Données
