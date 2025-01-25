@@ -15,7 +15,7 @@ export default defineConfig({
   projects: [
     {
       name: 'api-tests',
-      testMatch: '**/*.spec.ts',
+      testMatch: '**/*.e2e-spec.ts',
     },
   ],
 }); 
