@@ -12,7 +12,7 @@
 
 ### Phase 0 - Installation et Configuration
 
-#### ⚪️ v0.0.1 : Setup Initial
+#### 🟢 v0.0.1 : Setup Initial
 **Description:** Configuration initiale du projet
 
 1. Configuration du Projet
@@ -57,36 +57,36 @@
      - [x] Guide des tests E2E
      - [x] Guide de la couverture de code
 
-#### ⚪️ v0.0.2 : Configuration Docker Development
+#### 🟢 v0.0.2 : Configuration Docker Development
 **Description:** Mise en place de l'environnement Docker pour le développement
 
 1. Configuration des Conteneurs
-   - [ ] Dockerfile pour l'API NestJS
-     - [ ] Configuration du hot reload
-     - [ ] Configuration des volumes
-   - [ ] Dockerfile pour PostgreSQL
-     - [ ] Configuration des volumes pour la persistance
-     - [ ] Configuration des variables d'environnement
-   - [ ] Dockerfile pour Redis
-     - [ ] Configuration des volumes pour la persistance
-   - [ ] Docker Compose pour l'environnement de développement
-     - [ ] Configuration des services (API, PostgreSQL, Redis)
-     - [ ] Configuration des réseaux
-     - [ ] Configuration des volumes
-     - [ ] Configuration des variables d'environnement
+   - [x] Dockerfile pour l'API NestJS
+     - [x] Configuration du hot reload
+     - [x] Configuration des volumes
+   - [x] Dockerfile pour PostgreSQL
+     - [x] Configuration des volumes pour la persistance
+     - [x] Configuration des variables d'environnement
+   - [x] Dockerfile pour Redis
+     - [x] Configuration des volumes pour la persistance
+   - [x] Docker Compose pour l'environnement de développement
+     - [x] Configuration des services (API, PostgreSQL, Redis)
+     - [x] Configuration des réseaux
+     - [x] Configuration des volumes
+     - [x] Configuration des variables d'environnement
 
 2. Scripts Docker
-   - [ ] docker-compose up development
-   - [ ] docker-compose down
+   - [x] docker-compose up development
+   - [x] docker-compose down
 
 3. Documentation Docker
-   - [ ] Guide d'installation avec Docker
-   - [ ] Documentation de la configuration Docker
-   - [ ] Documentation des commandes Docker utiles
+   - [x] Guide d'installation avec Docker
+   - [x] Documentation de la configuration Docker
+   - [x] Documentation des commandes Docker utiles
 
 ### Phase 1 - Infrastructure de Base
 
-#### ⚪️ v0.1.0 : Configuration Base de Données
+#### 🟡 v0.1.0 : Configuration Base de Données
 **Description:** Mise en place de la base de données et des entités principales
 
 1. Configuration TypeORM
@@ -536,7 +536,7 @@
     - [ ] JSDoc des méthodes
     - [ ] Documentation des stratégies de cache
 
-#### 🟢 v0.8.0 : Bibliothèque de Ressources
+#### ⚪️ v0.8.0 : Bibliothèque de Ressources
 **Description:** Système de gestion des ressources (images, fichiers)
 
 1. Configuration de base
