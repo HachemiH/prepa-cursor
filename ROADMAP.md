@@ -10,16 +10,156 @@
 
 ## Version 0.x.x (Développement MVP)
 
+### Phase 0 - Installation et Configuration
+
+#### 🟢 v0.0.1 : Setup Initial
+**Description:** Configuration initiale du projet
+
+1. Configuration du Projet
+   - [x] Installation des dépendances via PNPM
+   - [x] Configuration de TypeScript
+   - [x] Configuration de ESLint
+   - [x] Configuration de Prettier
+   - [x] Configuration de Vitest pour les tests unitaires en local
+   - [x] Configuration de Playwright pour les tests E2E en local
+
+2. Configuration de l'Environnement
+   - [x] Configuration des variables d'environnement
+     - [x] Création du fichier .env
+     - [x] Création du fichier .env.example
+     - [x] Documentation des variables d'environnement
+   - [x] Configuration de la base de données PostgreSQL
+     - [x] Création de la base de données
+     - [x] Configuration de TypeORM
+   - [x] Configuration de Redis
+
+3. Scripts de Base
+   - [x] Scripts PNPM
+     - [x] build
+     - [x] dev
+     - [x] test:unit (exécution locale avec Vitest)
+     - [x] test:e2e (exécution locale avec Playwright)
+     - [x] test:coverage (rapport de couverture local)
+     - [x] lint
+     - [x] format
+   - [x] Scripts Base de données
+     - [x] cleanup
+     - [x] migrate
+     - [x] seed
+
+4. Documentation
+   - [x] Guide d'installation
+   - [x] Documentation de configuration
+   - [x] Documentation des scripts disponibles
+   - [x] Documentation des conventions de code
+   - [x] Documentation des tests
+     - [x] Guide des tests unitaires
+     - [x] Guide des tests E2E
+     - [x] Guide de la couverture de code
+
+#### 🟢 v0.0.2 : Configuration Docker Development
+**Description:** Mise en place de l'environnement Docker pour le développement
+
+1. Configuration des Conteneurs
+   - [x] Dockerfile pour l'API NestJS
+     - [x] Configuration du hot reload
+     - [x] Configuration des volumes
+   - [x] Dockerfile pour PostgreSQL
+     - [x] Configuration des volumes pour la persistance
+     - [x] Configuration des variables d'environnement
+   - [x] Dockerfile pour Redis
+     - [x] Configuration des volumes pour la persistance
+   - [x] Docker Compose pour l'environnement de développement
+     - [x] Configuration des services (API, PostgreSQL, Redis)
+     - [x] Configuration des réseaux
+     - [x] Configuration des volumes
+     - [x] Configuration des variables d'environnement
+
+2. Scripts Docker
+   - [x] docker-compose up development
+   - [x] docker-compose down
+
+3. Documentation Docker
+   - [x] Guide d'installation avec Docker
+   - [x] Documentation de la configuration Docker
+   - [x] Documentation des commandes Docker utiles
+
 ### Phase 1 - Infrastructure de Base
 
-#### ⚪️ v0.1.0 : Configuration Base de Données
-**Description:** Setup initial de la base de données avec TypeORM
-- [ ] Configuration TypeORM
-- [ ] Schéma de base
-- [ ] Migrations initiales
-- [ ] Relations entre entités
-- [ ] Tests unitaires connexion à la base de données
-- [ ] Tests unitaires migrations
+#### 🟡 v0.1.0 : Configuration Base de Données
+**Description:** Mise en place de la base de données et des entités principales
+
+1. Configuration TypeORM
+   - [ ] Configuration de la connexion PostgreSQL
+   - [ ] Configuration des migrations
+   - [ ] Tests de connexion
+   - [ ] Documentation technique
+
+2. Entités de Base
+   - [ ] Entité User (Base commune)
+     - id: UUID
+     - email: string (unique)
+     - password: string (hashé)
+     - firstName: string
+     - lastName: string
+     - role: enum (ADMIN, INSTRUCTOR, STUDENT)
+     - isActive: boolean
+     - createdAt: Date
+     - updatedAt: Date
+
+   - [ ] Entité Student (hérite de User)
+     - enrolledCourses: relation many-to-many avec Course
+     - progress: relation one-to-many avec CourseProgress
+     - lastLoginAt: Date
+
+   - [ ] Entité Instructor (hérite de User)
+     - bio: string
+     - expertise: string[]
+     - courses: relation one-to-many avec Course
+     - rating: number
+
+   - [ ] Entité Course
+     - id: UUID
+     - title: string
+     - description: string
+     - instructor: relation many-to-one avec Instructor
+     - students: relation many-to-many avec Student
+     - modules: relation one-to-many avec Module
+     - isPublished: boolean
+     - createdAt: Date
+     - updatedAt: Date
+
+   - [ ] Entité Module
+     - id: UUID
+     - title: string
+     - description: string
+     - course: relation many-to-one avec Course
+     - order: number
+     - content: string
+     - createdAt: Date
+     - updatedAt: Date
+
+   - [ ] Entité CourseProgress
+     - id: UUID
+     - student: relation many-to-one avec Student
+     - module: relation many-to-one avec Module
+     - completed: boolean
+     - completedAt: Date
+     - createdAt: Date
+     - updatedAt: Date
+
+3. Tests et Documentation
+   - [ ] Tests unitaires des entités
+   - [ ] Tests des relations entre entités
+   - [ ] Documentation des modèles de données
+   - [ ] Documentation des relations
+   - [ ] Diagramme des relations
+
+4. Migrations
+   - [ ] Migration initiale des entités
+   - [ ] Migration des relations
+   - [ ] Tests des migrations
+   - [ ] Documentation des migrations
 
 #### ⚪️ v0.2.0 : Système d'Authentification
 **Description:** Mise en place de l'authentification sécurisée
@@ -396,7 +536,7 @@
     - [ ] JSDoc des méthodes
     - [ ] Documentation des stratégies de cache
 
-#### 🟢 v0.8.0 : Bibliothèque de Ressources
+#### ⚪️ v0.8.0 : Bibliothèque de Ressources
 **Description:** Système de gestion des ressources (images, fichiers)
 
 1. Configuration de base
