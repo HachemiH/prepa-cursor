@@ -1,7 +1,7 @@
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
-  testDir: './test/e2e',
+  testDir: '.',
   timeout: 30000,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
@@ -15,7 +15,7 @@ export default defineConfig({
   projects: [
     {
       name: 'api-tests',
-      testMatch: /.*\.spec\.ts/,
+      testMatch: '**/*.spec.ts',
     },
   ],
 }); 
