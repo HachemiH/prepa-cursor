@@ -7,6 +7,7 @@ import { UserEntity } from '../../users/entities/user.entity';
 import { UserRole } from '../../users/enums/user-role.enum';
 import { CourseEntity } from '../../courses/entities/course.entity';
 import { InstructorEntity } from '../../instructors/entities/instructor.entity';
+import { getMetadataArgsStorage } from 'typeorm';
 
 describe('CourseProgressEntity', () => {
   const createValidStudent = () => {
@@ -27,11 +28,11 @@ describe('CourseProgressEntity', () => {
     const module = new ModuleEntity();
     module.title = 'Introduction aux Types';
     module.description = 'Découvrez les types de base en TypeScript';
-    
+
     const course = new CourseEntity();
     course.title = 'Introduction à TypeScript';
     course.description = 'Un cours complet sur TypeScript pour les débutants';
-    
+
     const instructor = new InstructorEntity();
     const user = new UserEntity();
     user.email = 'instructor@example.com';
@@ -41,17 +42,18 @@ describe('CourseProgressEntity', () => {
     user.role = UserRole.INSTRUCTOR;
     user.isActive = true;
     instructor.user = user;
-    instructor.bio = 'Une biographie détaillée de l\'instructeur';
+    instructor.bio = "Une biographie détaillée de l'instructeur";
     instructor.expertise = ['JavaScript', 'TypeScript'];
     instructor.rating = 4.5;
-    
+
     course.instructor = instructor;
     course.isPublished = false;
-    
+
     module.course = course;
     module.order = 1;
-    module.content = 'Contenu détaillé du module sur les types de base en TypeScript';
-    
+    module.content =
+      'Contenu détaillé du module sur les types de base en TypeScript';
+
     return module;
   };
 
@@ -66,18 +68,28 @@ describe('CourseProgressEntity', () => {
   });
 
   it('devrait avoir tous les champs requis définis', () => {
-    const progress = new CourseProgressEntity();
-    
-    expect(progress).toHaveProperty('id');
-    expect(progress).toHaveProperty('student');
-    expect(progress).toHaveProperty('module');
-    expect(progress).toHaveProperty('completed');
-    expect(progress).toHaveProperty('completedAt');
-    expect(progress).toHaveProperty('createdAt');
-    expect(progress).toHaveProperty('updatedAt');
+    const metadata = getMetadataArgsStorage();
+    const columns = metadata.columns.filter(
+      column => column.target === CourseProgressEntity,
+    );
+    const columnNames = columns.map(column => column.propertyName);
+
+    expect(columnNames).toContain('id');
+    expect(columnNames).toContain('completed');
+    expect(columnNames).toContain('completedAt');
+    expect(columnNames).toContain('createdAt');
+    expect(columnNames).toContain('updatedAt');
+
+    const relations = metadata.relations.filter(
+      relation => relation.target === CourseProgressEntity,
+    );
+    const relationNames = relations.map(relation => relation.propertyName);
+
+    expect(relationNames).toContain('student');
+    expect(relationNames).toContain('module');
   });
 
-  describe('Validation de l\'étudiant', () => {
+  describe("Validation de l'étudiant", () => {
     it('devrait rejeter une progression sans étudiant', async () => {
       const progress = new CourseProgressEntity();
       progress.module = createValidModule();
@@ -148,4 +160,4 @@ describe('CourseProgressEntity', () => {
       expect(errors).toHaveLength(0);
     });
   });
-}); 
+});

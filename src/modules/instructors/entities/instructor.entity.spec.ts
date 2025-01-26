@@ -3,6 +3,7 @@ import { validate } from 'class-validator';
 import { InstructorEntity } from './instructor.entity';
 import { UserEntity } from '../../users/entities/user.entity';
 import { UserRole } from '../../users/enums/user-role.enum';
+import { getMetadataArgsStorage } from 'typeorm';
 
 describe('InstructorEntity', () => {
   const createValidUser = () => {
@@ -19,7 +20,8 @@ describe('InstructorEntity', () => {
   it('devrait créer une instance valide', async () => {
     const instructor = new InstructorEntity();
     instructor.user = createValidUser();
-    instructor.bio = 'Une biographie détaillée de l\'instructeur avec son expérience professionnelle, ses compétences techniques et son parcours académique. Il a travaillé sur de nombreux projets et a acquis une expertise solide dans le développement web.';
+    instructor.bio =
+      "Une biographie détaillée de l'instructeur avec son expérience professionnelle, ses compétences techniques et son parcours académique. Il a travaillé sur de nombreux projets et a acquis une expertise solide dans le développement web.";
     instructor.expertise = ['JavaScript', 'TypeScript', 'Node.js'];
     instructor.rating = 4.5;
 
@@ -28,16 +30,26 @@ describe('InstructorEntity', () => {
   });
 
   it('devrait avoir tous les champs requis définis', () => {
-    const instructor = new InstructorEntity();
-    
-    expect(instructor).toHaveProperty('id');
-    expect(instructor).toHaveProperty('user');
-    expect(instructor).toHaveProperty('bio');
-    expect(instructor).toHaveProperty('expertise');
-    expect(instructor).toHaveProperty('rating');
-    expect(instructor).toHaveProperty('courses');
-    expect(instructor).toHaveProperty('createdAt');
-    expect(instructor).toHaveProperty('updatedAt');
+    const metadata = getMetadataArgsStorage();
+    const columns = metadata.columns.filter(
+      column => column.target === InstructorEntity,
+    );
+    const columnNames = columns.map(column => column.propertyName);
+
+    expect(columnNames).toContain('id');
+    expect(columnNames).toContain('bio');
+    expect(columnNames).toContain('expertise');
+    expect(columnNames).toContain('rating');
+    expect(columnNames).toContain('createdAt');
+    expect(columnNames).toContain('updatedAt');
+
+    const relations = metadata.relations.filter(
+      relation => relation.target === InstructorEntity,
+    );
+    const relationNames = relations.map(relation => relation.propertyName);
+
+    expect(relationNames).toContain('user');
+    expect(relationNames).toContain('courses');
   });
 
   describe('Validation de la biographie', () => {
@@ -57,7 +69,8 @@ describe('InstructorEntity', () => {
     it('devrait accepter une biographie valide', async () => {
       const instructor = new InstructorEntity();
       instructor.user = createValidUser();
-      instructor.bio = 'Une biographie détaillée de l\'instructeur avec son expérience professionnelle, ses compétences techniques et son parcours académique. Il a travaillé sur de nombreux projets et a acquis une expertise solide dans le développement web.';
+      instructor.bio =
+        "Une biographie détaillée de l'instructeur avec son expérience professionnelle, ses compétences techniques et son parcours académique. Il a travaillé sur de nombreux projets et a acquis une expertise solide dans le développement web.";
       instructor.expertise = ['JavaScript'];
       instructor.rating = 4.5;
 
@@ -67,29 +80,35 @@ describe('InstructorEntity', () => {
     });
   });
 
-  describe('Validation de l\'expertise', () => {
-    it('devrait rejeter une liste vide d\'expertise', async () => {
+  describe("Validation de l'expertise", () => {
+    it("devrait rejeter une liste vide d'expertise", async () => {
       const instructor = new InstructorEntity();
       instructor.user = createValidUser();
-      instructor.bio = 'Une biographie détaillée de l\'instructeur avec son expérience professionnelle, ses compétences techniques et son parcours académique. Il a travaillé sur de nombreux projets et a acquis une expertise solide dans le développement web.';
+      instructor.bio =
+        "Une biographie détaillée de l'instructeur avec son expérience professionnelle, ses compétences techniques et son parcours académique. Il a travaillé sur de nombreux projets et a acquis une expertise solide dans le développement web.";
       instructor.expertise = [];
       instructor.rating = 4.5;
 
       const errors = await validate(instructor);
-      const expertiseError = errors.find(error => error.property === 'expertise');
+      const expertiseError = errors.find(
+        error => error.property === 'expertise',
+      );
       expect(expertiseError).toBeDefined();
       expect(expertiseError?.property).toBe('expertise');
     });
 
-    it('devrait accepter une liste valide d\'expertise', async () => {
+    it("devrait accepter une liste valide d'expertise", async () => {
       const instructor = new InstructorEntity();
       instructor.user = createValidUser();
-      instructor.bio = 'Une biographie détaillée de l\'instructeur avec son expérience professionnelle, ses compétences techniques et son parcours académique. Il a travaillé sur de nombreux projets et a acquis une expertise solide dans le développement web.';
+      instructor.bio =
+        "Une biographie détaillée de l'instructeur avec son expérience professionnelle, ses compétences techniques et son parcours académique. Il a travaillé sur de nombreux projets et a acquis une expertise solide dans le développement web.";
       instructor.expertise = ['JavaScript', 'TypeScript', 'Node.js'];
       instructor.rating = 4.5;
 
       const errors = await validate(instructor);
-      const expertiseError = errors.find(error => error.property === 'expertise');
+      const expertiseError = errors.find(
+        error => error.property === 'expertise',
+      );
       expect(expertiseError).toBeUndefined();
     });
   });
@@ -98,7 +117,8 @@ describe('InstructorEntity', () => {
     it('devrait rejeter une note inférieure à 0', async () => {
       const instructor = new InstructorEntity();
       instructor.user = createValidUser();
-      instructor.bio = 'Une biographie détaillée de l\'instructeur avec son expérience professionnelle, ses compétences techniques et son parcours académique. Il a travaillé sur de nombreux projets et a acquis une expertise solide dans le développement web.';
+      instructor.bio =
+        "Une biographie détaillée de l'instructeur avec son expérience professionnelle, ses compétences techniques et son parcours académique. Il a travaillé sur de nombreux projets et a acquis une expertise solide dans le développement web.";
       instructor.expertise = ['JavaScript'];
       instructor.rating = -1;
 
@@ -111,7 +131,8 @@ describe('InstructorEntity', () => {
     it('devrait rejeter une note supérieure à 5', async () => {
       const instructor = new InstructorEntity();
       instructor.user = createValidUser();
-      instructor.bio = 'Une biographie détaillée de l\'instructeur avec son expérience professionnelle, ses compétences techniques et son parcours académique. Il a travaillé sur de nombreux projets et a acquis une expertise solide dans le développement web.';
+      instructor.bio =
+        "Une biographie détaillée de l'instructeur avec son expérience professionnelle, ses compétences techniques et son parcours académique. Il a travaillé sur de nombreux projets et a acquis une expertise solide dans le développement web.";
       instructor.expertise = ['JavaScript'];
       instructor.rating = 5.1;
 
@@ -124,7 +145,8 @@ describe('InstructorEntity', () => {
     it('devrait accepter une note valide', async () => {
       const instructor = new InstructorEntity();
       instructor.user = createValidUser();
-      instructor.bio = 'Une biographie détaillée de l\'instructeur avec son expérience professionnelle, ses compétences techniques et son parcours académique. Il a travaillé sur de nombreux projets et a acquis une expertise solide dans le développement web.';
+      instructor.bio =
+        "Une biographie détaillée de l'instructeur avec son expérience professionnelle, ses compétences techniques et son parcours académique. Il a travaillé sur de nombreux projets et a acquis une expertise solide dans le développement web.";
       instructor.expertise = ['JavaScript'];
       instructor.rating = 4.5;
 
@@ -133,4 +155,4 @@ describe('InstructorEntity', () => {
       expect(ratingError).toBeUndefined();
     });
   });
-}); 
+});

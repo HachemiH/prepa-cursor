@@ -3,6 +3,7 @@ import { validate } from 'class-validator';
 import { StudentEntity } from './student.entity';
 import { UserEntity } from '../../users/entities/user.entity';
 import { StudentLevel } from '../enums/student-level.enum';
+import { getMetadataArgsStorage } from 'typeorm';
 
 describe('StudentEntity', () => {
   it('devrait créer une instance valide', async () => {
@@ -17,16 +18,26 @@ describe('StudentEntity', () => {
   });
 
   it('devrait avoir tous les champs requis définis', () => {
-    const student = new StudentEntity();
-    
-    expect(student).toHaveProperty('id');
-    expect(student).toHaveProperty('user');
-    expect(student).toHaveProperty('level');
-    expect(student).toHaveProperty('bio');
-    expect(student).toHaveProperty('interests');
-    expect(student).toHaveProperty('lastLoginAt');
-    expect(student).toHaveProperty('createdAt');
-    expect(student).toHaveProperty('updatedAt');
+    const metadata = getMetadataArgsStorage();
+    const columns = metadata.columns.filter(
+      column => column.target === StudentEntity,
+    );
+    const columnNames = columns.map(column => column.propertyName);
+
+    expect(columnNames).toContain('id');
+    expect(columnNames).toContain('level');
+    expect(columnNames).toContain('bio');
+    expect(columnNames).toContain('interests');
+    expect(columnNames).toContain('lastLoginAt');
+    expect(columnNames).toContain('createdAt');
+    expect(columnNames).toContain('updatedAt');
+
+    const relations = metadata.relations.filter(
+      relation => relation.target === StudentEntity,
+    );
+    const relationNames = relations.map(relation => relation.propertyName);
+
+    expect(relationNames).toContain('user');
   });
 
   describe('Validation du niveau', () => {
@@ -80,7 +91,7 @@ describe('StudentEntity', () => {
   });
 
   describe('Validation des intérêts', () => {
-    it('devrait rejeter une liste vide d\'intérêts', async () => {
+    it("devrait rejeter une liste vide d'intérêts", async () => {
       const student = new StudentEntity();
       student.user = new UserEntity();
       student.level = StudentLevel.BEGINNER;
@@ -92,7 +103,7 @@ describe('StudentEntity', () => {
       expect(errors[0].property).toBe('interests');
     });
 
-    it('devrait accepter une liste valide d\'intérêts', async () => {
+    it("devrait accepter une liste valide d'intérêts", async () => {
       const student = new StudentEntity();
       student.user = new UserEntity();
       student.level = StudentLevel.BEGINNER;
@@ -103,4 +114,4 @@ describe('StudentEntity', () => {
       expect(errors).toHaveLength(0);
     });
   });
-}); 
+});

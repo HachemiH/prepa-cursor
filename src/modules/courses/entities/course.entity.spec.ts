@@ -4,6 +4,7 @@ import { CourseEntity } from './course.entity';
 import { InstructorEntity } from '../../instructors/entities/instructor.entity';
 import { UserEntity } from '../../users/entities/user.entity';
 import { UserRole } from '../../users/enums/user-role.enum';
+import { getMetadataArgsStorage } from 'typeorm';
 
 describe('CourseEntity', () => {
   const createValidInstructor = () => {
@@ -16,7 +17,8 @@ describe('CourseEntity', () => {
     user.role = UserRole.INSTRUCTOR;
     user.isActive = true;
     instructor.user = user;
-    instructor.bio = 'Une biographie détaillée de l\'instructeur avec son expérience';
+    instructor.bio =
+      "Une biographie détaillée de l'instructeur avec son expérience";
     instructor.expertise = ['JavaScript', 'TypeScript'];
     instructor.rating = 4.5;
     return instructor;
@@ -34,17 +36,27 @@ describe('CourseEntity', () => {
   });
 
   it('devrait avoir tous les champs requis définis', () => {
-    const course = new CourseEntity();
-    
-    expect(course).toHaveProperty('id');
-    expect(course).toHaveProperty('title');
-    expect(course).toHaveProperty('description');
-    expect(course).toHaveProperty('instructor');
-    expect(course).toHaveProperty('students');
-    // expect(course).toHaveProperty('modules');
-    expect(course).toHaveProperty('isPublished');
-    expect(course).toHaveProperty('createdAt');
-    expect(course).toHaveProperty('updatedAt');
+    const metadata = getMetadataArgsStorage();
+    const columns = metadata.columns.filter(
+      column => column.target === CourseEntity,
+    );
+    const columnNames = columns.map(column => column.propertyName);
+
+    expect(columnNames).toContain('id');
+    expect(columnNames).toContain('title');
+    expect(columnNames).toContain('description');
+    expect(columnNames).toContain('isPublished');
+    expect(columnNames).toContain('createdAt');
+    expect(columnNames).toContain('updatedAt');
+
+    const relations = metadata.relations.filter(
+      relation => relation.target === CourseEntity,
+    );
+    const relationNames = relations.map(relation => relation.propertyName);
+
+    expect(relationNames).toContain('instructor');
+    expect(relationNames).toContain('students');
+    expect(relationNames).toContain('modules');
   });
 
   describe('Validation du titre', () => {
@@ -96,7 +108,9 @@ describe('CourseEntity', () => {
       course.isPublished = false;
 
       const errors = await validate(course);
-      const descriptionError = errors.find(error => error.property === 'description');
+      const descriptionError = errors.find(
+        error => error.property === 'description',
+      );
       expect(descriptionError).toBeDefined();
       expect(descriptionError?.property).toBe('description');
     });
@@ -109,7 +123,9 @@ describe('CourseEntity', () => {
       course.isPublished = false;
 
       const errors = await validate(course);
-      const descriptionError = errors.find(error => error.property === 'description');
+      const descriptionError = errors.find(
+        error => error.property === 'description',
+      );
       expect(descriptionError).toBeDefined();
       expect(descriptionError?.property).toBe('description');
     });
@@ -122,12 +138,14 @@ describe('CourseEntity', () => {
       course.isPublished = false;
 
       const errors = await validate(course);
-      const descriptionError = errors.find(error => error.property === 'description');
+      const descriptionError = errors.find(
+        error => error.property === 'description',
+      );
       expect(descriptionError).toBeUndefined();
     });
   });
 
-  describe('Validation de l\'instructeur', () => {
+  describe("Validation de l'instructeur", () => {
     it('devrait rejeter un cours sans instructeur', async () => {
       const course = new CourseEntity();
       course.title = 'Introduction à TypeScript';
@@ -135,7 +153,9 @@ describe('CourseEntity', () => {
       course.isPublished = false;
 
       const errors = await validate(course);
-      const instructorError = errors.find(error => error.property === 'instructor');
+      const instructorError = errors.find(
+        error => error.property === 'instructor',
+      );
       expect(instructorError).toBeDefined();
       expect(instructorError?.property).toBe('instructor');
     });
@@ -148,8 +168,10 @@ describe('CourseEntity', () => {
       course.isPublished = false;
 
       const errors = await validate(course);
-      const instructorError = errors.find(error => error.property === 'instructor');
+      const instructorError = errors.find(
+        error => error.property === 'instructor',
+      );
       expect(instructorError).toBeUndefined();
     });
   });
-}); 
+});

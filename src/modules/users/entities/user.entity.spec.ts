@@ -3,6 +3,7 @@ import { describe, it, expect } from 'vitest';
 import { validate } from 'class-validator';
 import { UserEntity } from './user.entity';
 import { UserRole } from '../enums/user-role.enum';
+import { getMetadataArgsStorage } from 'typeorm';
 
 describe('UserEntity', () => {
   it('devrait créer une instance valide avec tous les champs requis', async () => {
@@ -19,28 +20,42 @@ describe('UserEntity', () => {
     expect(errors).toHaveLength(0);
   });
 
-  it('devrait avoir tous les champs requis définis', () => {
-    const user = new UserEntity();
-    
-    expect(user).toHaveProperty('id');
-    expect(user).toHaveProperty('email');
-    expect(user).toHaveProperty('password');
-    expect(user).toHaveProperty('firstName');
-    expect(user).toHaveProperty('lastName');
-    expect(user).toHaveProperty('role');
-    expect(user).toHaveProperty('isActive');
-    expect(user).toHaveProperty('createdAt');
-    expect(user).toHaveProperty('updatedAt');
+  it('devrait avoir tous les champs requis définis dans la classe', () => {
+    const metadata = getMetadataArgsStorage();
+    const columns = metadata.columns.filter(
+      column => column.target === UserEntity,
+    );
+
+    const expectedProperties = [
+      'email',
+      'password',
+      'firstName',
+      'lastName',
+      'role',
+      'isActive',
+      'isSuperAdmin',
+      'id',
+      'createdAt',
+      'updatedAt',
+    ];
+
+    expectedProperties.forEach(prop => {
+      const hasProperty = columns.some(column => column.propertyName === prop);
+      expect(
+        hasProperty,
+        `La propriété ${prop} devrait être définie comme une colonne`,
+      ).toBe(true);
+    });
   });
 
   describe('Validation du champ email', () => {
     it('devrait rejeter un email invalide', async () => {
       const user = new UserEntity();
       user.email = 'invalid-email';
-      
+
       const errors = await validate(user);
       const emailErrors = errors.find(err => err.property === 'email');
-      
+
       expect(emailErrors).toBeDefined();
       expect(emailErrors?.constraints).toHaveProperty('isEmail');
     });
@@ -48,10 +63,10 @@ describe('UserEntity', () => {
     it('devrait rejeter un email vide', async () => {
       const user = new UserEntity();
       user.email = '';
-      
+
       const errors = await validate(user);
       const emailErrors = errors.find(err => err.property === 'email');
-      
+
       expect(emailErrors).toBeDefined();
       expect(emailErrors?.constraints).toHaveProperty('isNotEmpty');
     });
@@ -61,10 +76,10 @@ describe('UserEntity', () => {
     it('devrait rejeter un mot de passe trop court', async () => {
       const user = new UserEntity();
       user.password = 'short';
-      
+
       const errors = await validate(user);
       const passwordErrors = errors.find(err => err.property === 'password');
-      
+
       expect(passwordErrors).toBeDefined();
       expect(passwordErrors?.constraints).toHaveProperty('minLength');
     });
@@ -72,10 +87,10 @@ describe('UserEntity', () => {
     it('devrait rejeter un mot de passe sans majuscule', async () => {
       const user = new UserEntity();
       user.password = 'password123!';
-      
+
       const errors = await validate(user);
       const passwordErrors = errors.find(err => err.property === 'password');
-      
+
       expect(passwordErrors).toBeDefined();
       expect(passwordErrors?.constraints).toHaveProperty('matches');
     });
@@ -85,10 +100,10 @@ describe('UserEntity', () => {
     it('devrait accepter uniquement les rôles valides', async () => {
       const user = new UserEntity();
       user.role = 'INVALID_ROLE' as UserRole;
-      
+
       const errors = await validate(user);
       const roleErrors = errors.find(err => err.property === 'role');
-      
+
       expect(roleErrors).toBeDefined();
       expect(roleErrors?.constraints).toHaveProperty('isEnum');
     });
@@ -105,7 +120,7 @@ describe('UserEntity', () => {
         expect(user.isValidRoleTransition(UserRole.ADMIN)).toBe(false);
       });
 
-      it('devrait empêcher un SUPER_ADMIN d\'être rétrogradé', () => {
+      it("devrait empêcher un SUPER_ADMIN d'être rétrogradé", () => {
         const user = new UserEntity();
         user.role = UserRole.ADMIN;
         user.isSuperAdmin = true;
@@ -138,9 +153,14 @@ describe('UserEntity', () => {
     });
 
     describe('canAccessResource', () => {
-      it('devrait autoriser l\'accès aux routes publiques pour tous les rôles', () => {
+      it("devrait autoriser l'accès aux routes publiques pour tous les rôles", () => {
         const user = new UserEntity();
-        const roles = [UserRole.STUDENT, UserRole.INSTRUCTOR, UserRole.ADMIN, UserRole.BANNED];
+        const roles = [
+          UserRole.STUDENT,
+          UserRole.INSTRUCTOR,
+          UserRole.ADMIN,
+          UserRole.BANNED,
+        ];
 
         roles.forEach(role => {
           user.role = role;
@@ -148,7 +168,7 @@ describe('UserEntity', () => {
         });
       });
 
-      it('devrait refuser l\'accès aux utilisateurs bannis sauf pour les routes publiques', () => {
+      it("devrait refuser l'accès aux utilisateurs bannis sauf pour les routes publiques", () => {
         const user = new UserEntity();
         user.role = UserRole.BANNED;
 
@@ -169,7 +189,7 @@ describe('UserEntity', () => {
         expect(user.canAccessResource([UserRole.INSTRUCTOR])).toBe(true);
       });
 
-      it('devrait refuser l\'accès SUPER_ADMIN aux admins normaux', () => {
+      it("devrait refuser l'accès SUPER_ADMIN aux admins normaux", () => {
         const user = new UserEntity();
         user.role = UserRole.ADMIN;
         user.isSuperAdmin = false;
@@ -186,7 +206,9 @@ describe('UserEntity', () => {
         expect(user.canAccessResource([UserRole.INSTRUCTOR])).toBe(true);
         expect(user.canAccessResource([UserRole.STUDENT])).toBe(false);
         expect(user.canAccessResource([UserRole.ADMIN])).toBe(false);
-        expect(user.canAccessResource([UserRole.INSTRUCTOR, UserRole.ADMIN])).toBe(true);
+        expect(
+          user.canAccessResource([UserRole.INSTRUCTOR, UserRole.ADMIN]),
+        ).toBe(true);
       });
     });
 
@@ -202,7 +224,9 @@ describe('UserEntity', () => {
         user.isSuperAdmin = true;
 
         const errors = await validate(user);
-        const superAdminErrors = errors.find(err => err.property === 'isSuperAdmin');
+        const superAdminErrors = errors.find(
+          err => err.property === 'isSuperAdmin',
+        );
         expect(superAdminErrors).toBeUndefined();
       });
 
@@ -217,10 +241,16 @@ describe('UserEntity', () => {
         user.isSuperAdmin = true;
 
         const errors = await validate(user);
-        const superAdminErrors = errors.find(err => err.property === 'isSuperAdmin');
+        const superAdminErrors = errors.find(
+          err => err.property === 'isSuperAdmin',
+        );
         expect(superAdminErrors).toBeDefined();
-        expect(superAdminErrors?.constraints).toHaveProperty('isSuperAdminConstraint');
-        expect(superAdminErrors?.constraints?.isSuperAdminConstraint).toBe('Seuls les administrateurs peuvent être super administrateurs');
+        expect(superAdminErrors?.constraints).toHaveProperty(
+          'isSuperAdminConstraint',
+        );
+        expect(superAdminErrors?.constraints?.isSuperAdminConstraint).toBe(
+          'Seuls les administrateurs peuvent être super administrateurs',
+        );
       });
 
       it('devrait accepter isSuperAdmin false pour les non-admins', async () => {
@@ -234,9 +264,11 @@ describe('UserEntity', () => {
         user.isSuperAdmin = false;
 
         const errors = await validate(user);
-        const superAdminErrors = errors.find(err => err.property === 'isSuperAdmin');
+        const superAdminErrors = errors.find(
+          err => err.property === 'isSuperAdmin',
+        );
         expect(superAdminErrors).toBeUndefined();
       });
     });
   });
-}); 
+});

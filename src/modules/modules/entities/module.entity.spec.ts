@@ -5,13 +5,14 @@ import { CourseEntity } from '../../courses/entities/course.entity';
 import { InstructorEntity } from '../../instructors/entities/instructor.entity';
 import { UserEntity } from '../../users/entities/user.entity';
 import { UserRole } from '../../users/enums/user-role.enum';
+import { getMetadataArgsStorage } from 'typeorm';
 
 describe('ModuleEntity', () => {
   const createValidCourse = () => {
     const course = new CourseEntity();
     course.title = 'Introduction à TypeScript';
     course.description = 'Un cours complet sur TypeScript pour les débutants';
-    
+
     const instructor = new InstructorEntity();
     const user = new UserEntity();
     user.email = 'instructor@example.com';
@@ -21,10 +22,10 @@ describe('ModuleEntity', () => {
     user.role = UserRole.INSTRUCTOR;
     user.isActive = true;
     instructor.user = user;
-    instructor.bio = 'Une biographie détaillée de l\'instructeur';
+    instructor.bio = "Une biographie détaillée de l'instructeur";
     instructor.expertise = ['JavaScript', 'TypeScript'];
     instructor.rating = 4.5;
-    
+
     course.instructor = instructor;
     course.isPublished = false;
     return course;
@@ -36,23 +37,34 @@ describe('ModuleEntity', () => {
     module.description = 'Découvrez les types de base en TypeScript';
     module.course = createValidCourse();
     module.order = 1;
-    module.content = 'Contenu détaillé du module sur les types de base en TypeScript';
+    module.content =
+      'Contenu détaillé du module sur les types de base en TypeScript';
 
     const errors = await validate(module);
     expect(errors).toHaveLength(0);
   });
 
   it('devrait avoir tous les champs requis définis', () => {
-    const module = new ModuleEntity();
-    
-    expect(module).toHaveProperty('id');
-    expect(module).toHaveProperty('title');
-    expect(module).toHaveProperty('description');
-    expect(module).toHaveProperty('course');
-    expect(module).toHaveProperty('order');
-    expect(module).toHaveProperty('content');
-    expect(module).toHaveProperty('createdAt');
-    expect(module).toHaveProperty('updatedAt');
+    const metadata = getMetadataArgsStorage();
+    const columns = metadata.columns.filter(
+      column => column.target === ModuleEntity,
+    );
+    const columnNames = columns.map(column => column.propertyName);
+
+    expect(columnNames).toContain('id');
+    expect(columnNames).toContain('title');
+    expect(columnNames).toContain('description');
+    expect(columnNames).toContain('order');
+    expect(columnNames).toContain('content');
+    expect(columnNames).toContain('createdAt');
+    expect(columnNames).toContain('updatedAt');
+
+    const relations = metadata.relations.filter(
+      relation => relation.target === ModuleEntity,
+    );
+    const relationNames = relations.map(relation => relation.propertyName);
+
+    expect(relationNames).toContain('course');
   });
 
   describe('Validation du titre', () => {
@@ -108,7 +120,9 @@ describe('ModuleEntity', () => {
       module.content = 'Contenu détaillé du module';
 
       const errors = await validate(module);
-      const descriptionError = errors.find(error => error.property === 'description');
+      const descriptionError = errors.find(
+        error => error.property === 'description',
+      );
       expect(descriptionError).toBeDefined();
       expect(descriptionError?.property).toBe('description');
     });
@@ -122,7 +136,9 @@ describe('ModuleEntity', () => {
       module.content = 'Contenu détaillé du module';
 
       const errors = await validate(module);
-      const descriptionError = errors.find(error => error.property === 'description');
+      const descriptionError = errors.find(
+        error => error.property === 'description',
+      );
       expect(descriptionError).toBeDefined();
       expect(descriptionError?.property).toBe('description');
     });
@@ -136,7 +152,9 @@ describe('ModuleEntity', () => {
       module.content = 'Contenu détaillé du module';
 
       const errors = await validate(module);
-      const descriptionError = errors.find(error => error.property === 'description');
+      const descriptionError = errors.find(
+        error => error.property === 'description',
+      );
       expect(descriptionError).toBeUndefined();
     });
   });
@@ -169,7 +187,7 @@ describe('ModuleEntity', () => {
     });
   });
 
-  describe('Validation de l\'ordre', () => {
+  describe("Validation de l'ordre", () => {
     it('devrait rejeter un ordre négatif', async () => {
       const module = new ModuleEntity();
       module.title = 'Introduction aux Types';
@@ -233,11 +251,12 @@ describe('ModuleEntity', () => {
       module.description = 'Découvrez les types de base en TypeScript';
       module.course = createValidCourse();
       module.order = 1;
-      module.content = 'Contenu détaillé du module sur les types de base en TypeScript';
+      module.content =
+        'Contenu détaillé du module sur les types de base en TypeScript';
 
       const errors = await validate(module);
       const contentError = errors.find(error => error.property === 'content');
       expect(contentError).toBeUndefined();
     });
   });
-}); 
+});
