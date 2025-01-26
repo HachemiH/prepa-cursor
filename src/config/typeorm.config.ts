@@ -50,7 +50,7 @@ const typeormConfig: PostgresConnectionOptions = {
   entities: ['dist/**/*.entity{.ts,.js}'],
   migrations: ['dist/migrations/*{.ts,.js}'],
   synchronize: NODE_ENV === 'development',
-  logging: NODE_ENV === 'development',
+  logging: false,
 };
 
 export default typeormConfig; 
