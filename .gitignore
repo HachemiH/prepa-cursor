@@ -27,3 +27,6 @@ Thumbs.db
 
 # Test Results
 test-results
+
+# Redis
+dump.rdb
