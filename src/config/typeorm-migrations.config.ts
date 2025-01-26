@@ -1,5 +1,6 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { config } from 'dotenv';
+import { UserEntity } from '../modules/users/entities/user.entity';
 
 config();
 
@@ -22,7 +23,7 @@ const dataSource = new DataSource({
   database: DB_DATABASE,
   schema: DB_SCHEMA,
   migrations: ['src/migrations/*{.ts,.js}'],
-  entities: ['src/**/*.entity{.ts,.js}'],
+  entities: [UserEntity],
   logging: NODE_ENV === 'development',
 } as DataSourceOptions);
 

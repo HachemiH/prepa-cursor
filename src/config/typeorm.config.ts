@@ -24,7 +24,7 @@
  * - Migrations : "dist/migrations/*.{ts,js}"
  */
 
-import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 import { config } from 'dotenv';
 
 config();
@@ -39,7 +39,7 @@ const {
   NODE_ENV = 'development',
 } = process.env;
 
-const typeormConfig: TypeOrmModuleOptions = {
+const typeormConfig: PostgresConnectionOptions = {
   type: 'postgres',
   host: DB_HOST,
   port: parseInt(DB_PORT, 10),
@@ -49,7 +49,6 @@ const typeormConfig: TypeOrmModuleOptions = {
   schema: DB_SCHEMA,
   entities: ['dist/**/*.entity{.ts,.js}'],
   migrations: ['dist/migrations/*{.ts,.js}'],
-  autoLoadEntities: true,
   synchronize: NODE_ENV === 'development',
   logging: NODE_ENV === 'development',
 };

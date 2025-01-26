@@ -29,5 +29,18 @@ export default defineConfig({
       '@': resolve(__dirname, './src'),
     },
   },
-  plugins: [swc.vite()],
+  plugins: [
+    swc.vite({
+      jsc: {
+        parser: {
+          syntax: 'typescript',
+          decorators: true,
+        },
+        target: 'es2021',
+        transform: {
+          decoratorMetadata: true,
+        },
+      },
+    }),
+  ],
 }); 

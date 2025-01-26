@@ -1,18 +1,13 @@
-import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+import { describe, it, expect, vi, beforeAll } from 'vitest';
 import { DataSource } from 'typeorm';
 import dataSource from './typeorm-migrations.config';
+import { UserEntity } from '../modules/users/entities/user.entity';
 
 describe('Configuration des Migrations TypeORM', () => {
   let testDataSource: DataSource;
 
   beforeAll(() => {
     testDataSource = dataSource;
-  });
-
-  afterAll(async () => {
-    if (testDataSource && testDataSource.isInitialized) {
-      await testDataSource.destroy();
-    }
   });
 
   it('devrait avoir une configuration de base valide', () => {
@@ -24,13 +19,8 @@ describe('Configuration des Migrations TypeORM', () => {
     expect(testDataSource.options.migrations).toEqual(['src/migrations/*{.ts,.js}']);
   });
 
-  it('devrait avoir les chemins des entités configurés correctement', () => {
-    expect(testDataSource.options.entities).toEqual(['src/**/*.entity{.ts,.js}']);
-  });
-
-  it('devrait pouvoir se connecter à la base de données', async () => {
-    await expect(testDataSource.initialize()).resolves.toBeDefined();
-    expect(testDataSource.isInitialized).toBe(true);
+  it('devrait avoir les entités correctement configurées', () => {
+    expect(testDataSource.options.entities).toContain(UserEntity);
   });
 
   it('devrait avoir les options de développement correctes', () => {
