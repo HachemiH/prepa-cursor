@@ -86,7 +86,7 @@
 
 ### Phase 1 - Infrastructure de Base
 
-#### 🟡 v0.1.0 : Configuration Base de Données
+#### 🟢 v0.1.0 : Configuration Base de Données
 **Description:** Mise en place de la base de données et des entités principales
 
 1. Configuration TypeORM
@@ -98,72 +98,60 @@
    - [x] Documentation des commandes
 
 2. Entités de Base
-   - [ ] Entité User (Base commune)
-     - id: UUID
-     - email: string (unique)
-     - password: string (hashé)
-     - firstName: string
-     - lastName: string
-     - role: enum (ADMIN, INSTRUCTOR, STUDENT)
-     - isActive: boolean
-     - createdAt: Date
-     - updatedAt: Date
-
-   - [ ] Entité Student (hérite de User)
-     - enrolledCourses: relation many-to-many avec Course
-     - progress: relation one-to-many avec CourseProgress
-     - lastLoginAt: Date
-
-   - [ ] Entité Instructor (hérite de User)
-     - bio: string
-     - expertise: string[]
-     - courses: relation one-to-many avec Course
-     - rating: number
-
-   - [ ] Entité Course
-     - id: UUID
-     - title: string
-     - description: string
-     - instructor: relation many-to-one avec Instructor
-     - students: relation many-to-many avec Student
-     - modules: relation one-to-many avec Module
-     - isPublished: boolean
-     - createdAt: Date
-     - updatedAt: Date
-
-   - [ ] Entité Module
-     - id: UUID
-     - title: string
-     - description: string
-     - course: relation many-to-one avec Course
-     - order: number
-     - content: string
-     - createdAt: Date
-     - updatedAt: Date
-
-   - [ ] Entité CourseProgress
-     - id: UUID
-     - student: relation many-to-one avec Student
-     - module: relation many-to-one avec Module
-     - completed: boolean
-     - completedAt: Date
-     - createdAt: Date
-     - updatedAt: Date
+   - [x] Entité User (Base commune)
+   - [x] Entité Student (hérite de User)
+   - [x] Entité Instructor (hérite de User)
+   - [x] Entité Course
+   - [x] Entité Module
+   - [x] Entité CourseProgress
 
 3. Tests et Documentation
-   - [ ] Tests unitaires des entités
-   - [ ] Tests des relations entre entités
-   - [ ] Documentation des modèles de données
-   - [ ] Documentation des relations
-   - [ ] Diagramme des relations
+   - [x] Tests unitaires des entités
+   - [x] Tests des relations entre entités
+   - [x] Documentation des modèles de données
+   - [x] Documentation des relations
+   - [x] Diagramme des relations
 
 4. Migrations
-   - [ ] Migration initiale des entités
-   - [ ] Migration des relations
-   - [ ] Tests des migrations
-   - [ ] Documentation des migrations
+   - [x] Migration initiale des entités
+   - [x] Migration des relations
+   - [x] Tests des migrations
+   - [x] Documentation des migrations
 
-#### ⚪️ v0.2.0 : Système d'Authentification
+#### 🟡 v0.2.0 : Gestion des Rôles
+**Description:** Système de gestion des rôles et permissions
+
+1. Configuration de base
+   - [x] Modèle Role et Permission (enums)
+   - [x] Configuration des permissions par rôle
+   - [x] Tests unitaires modèle Role et Permission
+   - [x] Ajout du rôle BANNED avec gestion des transitions
+
+2. Système de vérification
+   - [x] Guard de vérification des rôles
+   - [x] Tests unitaires guard des rôles
+   - [x] Tests unitaires gestion SUPER_ADMIN
+   - [x] Tests unitaires accès routes publiques
+   - [x] Tests unitaires accès routes protégées
+   - [x] Tests unitaires gestion erreurs permissions
+
+3. Validation des rôles
+   - [x] Validation basique des rôles (entité)
+   - [x] Validation avancée des rôles (service)
+   - [x] Tests unitaires validation des rôles
+   - [x] Tests unitaires validation des rôles requis
+   - [x] Tests unitaires permissions utilisateur
+   - [x] Tests des transitions vers/depuis BANNED
+
+4. API de consultation et gestion
+   - [x] Endpoint GET pour lister les rôles disponibles
+   - [x] Endpoint PATCH pour mettre à jour le rôle d'un utilisateur
+   - [x] Tests unitaires des endpoints
+   - [ ] Tests E2E de la lecture des rôles
+   - [ ] Tests E2E de la mise à jour des rôles
+   - [x] Tests unitaires sécurité des rôles
+
+#### ⚪️ v0.3.0 : Système d'Authentification
 **Description:** Mise en place de l'authentification sécurisée
 - [ ] Authentification JWT
 - [ ] Hachage des mots de passe
@@ -186,55 +174,6 @@
 - [ ] Tests E2E prénom invalide
 - [ ] Tests E2E nom invalide
 - [ ] Tests E2E données manquantes
-
-#### ⚪️ v0.3.0 : Gestion des Rôles
-**Description:** Système de gestion des rôles et permissions
-
-1. Configuration de base
-   - [ ] Modèle Role et Permission (enums)
-   - [ ] Configuration des permissions par rôle
-   - [ ] Tests unitaires modèle Role et Permission
-   - [ ] Ajout du rôle BANNED avec gestion des transitions
-
-2. Système de vérification
-   - [ ] Guard de vérification des rôles
-   - [ ] Tests unitaires guard des rôles
-   - [ ] Tests unitaires gestion SUPER_ADMIN
-   - [ ] Tests unitaires accès routes publiques
-   - [ ] Tests unitaires accès routes protégées
-   - [ ] Tests unitaires gestion erreurs permissions
-
-3. Validation des rôles
-   - [ ] Validation basique des rôles (entité)
-   - [ ] Validation avancée des rôles (service)
-   - [ ] Tests unitaires validation des rôles
-   - [ ] Tests unitaires validation des rôles requis
-   - [ ] Tests unitaires permissions utilisateur
-   - [ ] Tests des transitions vers/depuis BANNED
-
-4. API de consultation et gestion
-   - [ ] Endpoint GET pour lister les rôles disponibles
-   - [ ] Endpoint PATCH pour mettre à jour le rôle d'un utilisateur
-   - [ ] Tests unitaires des endpoints
-   - [ ] Tests E2E de la lecture des rôles
-   - [ ] Tests E2E de la mise à jour des rôles
-   - [ ] Tests unitaires sécurité des rôles
-
-#### ⚪️ v0.4.0 : Setup Docker Development
-**Description:** Configuration Docker pour le développement
-- [ ] Dockerfile API NestJS
-- [ ] Dockerfile PostgreSQL
-- [ ] Docker Compose avec hot reload
-- [ ] Variables d'environnement
-- [ ] Tests unitaires configuration Docker
-
-#### ⚪️ v0.5.0 : Pipeline CI/CD basique
-**Description:** Intégration continue initiale
-- [ ] Configuration Github Actions de base
-- [ ] Tests automatisés essentiels
-- [ ] Analyse de code basique
-- [ ] Build automatisé des images Docker
-- [ ] Tests unitaires pipeline CI/CD
 
 ### Phase 2 - Gestion Utilisateurs
 
