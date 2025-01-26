@@ -118,7 +118,7 @@
    - [x] Tests des migrations
    - [x] Documentation des migrations
 
-#### 🟡 v0.2.0 : Gestion des Rôles
+#### 🟢 v0.2.0 : Gestion des Rôles
 **Description:** Système de gestion des rôles et permissions
 
 1. Configuration de base
@@ -147,11 +147,11 @@
    - [x] Endpoint GET pour lister les rôles disponibles
    - [x] Endpoint PATCH pour mettre à jour le rôle d'un utilisateur
    - [x] Tests unitaires des endpoints
-   - [ ] Tests E2E de la lecture des rôles
-   - [ ] Tests E2E de la mise à jour des rôles
+   - [x] Tests E2E de la lecture des rôles
+   - [ ] Tests E2E de la mise à jour des rôles (reporté à v0.3.0)
    - [x] Tests unitaires sécurité des rôles
 
-#### ⚪️ v0.3.0 : Système d'Authentification
+#### 🟡 v0.3.0 : Système d'Authentification
 **Description:** Mise en place de l'authentification sécurisée
 - [ ] Authentification JWT
 - [ ] Hachage des mots de passe
