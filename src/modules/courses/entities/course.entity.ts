@@ -10,10 +10,7 @@ import {
   JoinColumn,
   JoinTable,
 } from 'typeorm';
-import {
-  IsNotEmpty,
-  MinLength,
-} from 'class-validator';
+import { IsNotEmpty, MinLength } from 'class-validator';
 import { InstructorEntity } from '../../instructors/entities/instructor.entity';
 import { StudentEntity } from '../../students/entities/student.entity';
 import { ModuleEntity } from '../../modules/entities/module.entity';
@@ -23,7 +20,7 @@ export class CourseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ type: 'varchar' })
   @IsNotEmpty()
   @MinLength(5)
   title: string;
@@ -45,7 +42,7 @@ export class CourseEntity {
   @OneToMany(() => ModuleEntity, module => module.course)
   modules: ModuleEntity[];
 
-  @Column({ default: false })
+  @Column({ type: 'boolean', default: false })
   isPublished: boolean;
 
   @CreateDateColumn()
@@ -53,4 +50,4 @@ export class CourseEntity {
 
   @UpdateDateColumn()
   updatedAt: Date;
-} 
+}

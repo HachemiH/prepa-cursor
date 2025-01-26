@@ -7,11 +7,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import {
-  IsNotEmpty,
-  MinLength,
-  Min,
-} from 'class-validator';
+import { IsNotEmpty, MinLength, Min } from 'class-validator';
 import { CourseEntity } from '../../courses/entities/course.entity';
 
 @Entity('modules')
@@ -19,7 +15,7 @@ export class ModuleEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ type: 'varchar' })
   @IsNotEmpty()
   @MinLength(5)
   title: string;
@@ -34,7 +30,7 @@ export class ModuleEntity {
   @IsNotEmpty()
   course: CourseEntity;
 
-  @Column()
+  @Column({ type: 'integer' })
   @IsNotEmpty()
   @Min(0)
   order: number;
@@ -49,4 +45,4 @@ export class ModuleEntity {
 
   @UpdateDateColumn()
   updatedAt: Date;
-} 
+}

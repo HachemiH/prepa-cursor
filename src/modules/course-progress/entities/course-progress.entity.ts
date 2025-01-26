@@ -7,12 +7,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import {
-  IsNotEmpty,
-  IsBoolean,
-  ValidateIf,
-  IsDate,
-} from 'class-validator';
+import { IsNotEmpty, IsBoolean, ValidateIf, IsDate } from 'class-validator';
 import { StudentEntity } from '../../students/entities/student.entity';
 import { ModuleEntity } from '../../modules/entities/module.entity';
 
@@ -31,7 +26,7 @@ export class CourseProgressEntity {
   @IsNotEmpty()
   module: ModuleEntity;
 
-  @Column()
+  @Column({ type: 'boolean', default: false })
   @IsBoolean()
   completed: boolean;
 
@@ -45,4 +40,4 @@ export class CourseProgressEntity {
 
   @UpdateDateColumn()
   updatedAt: Date;
-} 
+}

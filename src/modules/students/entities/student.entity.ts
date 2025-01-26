@@ -54,4 +54,4 @@ export class StudentEntity {
 
   @OneToMany(() => CourseProgressEntity, progress => progress.student)
   progress: CourseProgressEntity[];
-} 
+}

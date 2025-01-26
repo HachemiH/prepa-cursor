@@ -5,12 +5,23 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { IsEmail, IsNotEmpty, MinLength, Matches, IsEnum, IsBoolean, Validate, ValidatorConstraint, ValidatorConstraintInterface } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  MinLength,
+  Matches,
+  IsEnum,
+  IsBoolean,
+  Validate,
+  ValidatorConstraint,
+  ValidatorConstraintInterface,
+  ValidationArguments,
+} from 'class-validator';
 import { UserRole } from '../enums/user-role.enum';
 
 @ValidatorConstraint({ name: 'isSuperAdminConstraint', async: false })
 class IsSuperAdminConstraint implements ValidatorConstraintInterface {
-  validate(value: boolean, args: any) {
+  validate(value: boolean, args: ValidationArguments) {
     const object = args.object as UserEntity;
     if (object.role !== UserRole.ADMIN && value === true) {
       return false;
@@ -28,25 +39,28 @@ export class UserEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ unique: true })
+  @Column({ type: 'varchar', unique: true })
   @IsEmail()
   @IsNotEmpty()
   email: string;
 
-  @Column()
+  @Column({ type: 'varchar' })
   @IsNotEmpty()
   @MinLength(8)
-  @Matches(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/, {
-    message:
-      'Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial',
-  })
+  @Matches(
+    /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
+    {
+      message:
+        'Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial',
+    },
+  )
   password: string;
 
-  @Column()
+  @Column({ type: 'varchar' })
   @IsNotEmpty()
   firstName: string;
 
-  @Column()
+  @Column({ type: 'varchar' })
   @IsNotEmpty()
   lastName: string;
 
@@ -54,14 +68,14 @@ export class UserEntity {
   @IsEnum(UserRole)
   role: UserRole;
 
-  @Column({ default: true })
+  @Column({ type: 'boolean', default: true })
   @IsBoolean()
   isActive: boolean;
 
-  @Column({ default: false })
+  @Column({ type: 'boolean', default: false })
   @IsBoolean()
   @Validate(IsSuperAdminConstraint, {
-    message: 'Seuls les administrateurs peuvent être super administrateurs'
+    message: 'Seuls les administrateurs peuvent être super administrateurs',
   })
   isSuperAdmin: boolean;
 
@@ -84,14 +98,19 @@ export class UserEntity {
     }
 
     // Un ADMIN ne peut pas devenir STUDENT ou INSTRUCTOR
-    if (this.role === UserRole.ADMIN && (newRole === UserRole.STUDENT || newRole === UserRole.INSTRUCTOR)) {
+    if (
+      this.role === UserRole.ADMIN &&
+      (newRole === UserRole.STUDENT || newRole === UserRole.INSTRUCTOR)
+    ) {
       return false;
     }
 
     return true;
   }
 
-  canAccessResource(requiredRoles: UserRole[] | 'PUBLIC' | 'SUPER_ADMIN_ONLY'): boolean {
+  canAccessResource(
+    requiredRoles: UserRole[] | 'PUBLIC' | 'SUPER_ADMIN_ONLY',
+  ): boolean {
     // Les routes publiques sont accessibles à tous
     if (requiredRoles === 'PUBLIC') {
       return true;
