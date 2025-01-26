@@ -14,22 +14,30 @@ describe('TestController', () => {
   describe('Routes protégées', () => {
     it('devrait retourner un message pour la route admin', () => {
       const result = controller.getAdmin();
-      expect(result).toEqual({ message: 'Cette route est réservée aux admins' });
+      expect(result).toEqual({
+        message: 'Cette route est réservée aux admins',
+      });
     });
 
     it('devrait retourner un message pour la route instructeur', () => {
       const result = controller.getInstructor();
-      expect(result).toEqual({ message: 'Cette route est réservée aux instructeurs' });
+      expect(result).toEqual({
+        message: 'Cette route est réservée aux instructeurs',
+      });
     });
 
     it('devrait retourner un message pour la route étudiant', () => {
       const result = controller.getStudent();
-      expect(result).toEqual({ message: 'Cette route est réservée aux étudiants' });
+      expect(result).toEqual({
+        message: 'Cette route est réservée aux étudiants',
+      });
     });
 
     it('devrait retourner un message pour la route instructeur/admin', () => {
       const result = controller.getInstructorOrAdmin();
-      expect(result).toEqual({ message: 'Cette route est réservée aux instructeurs et admins' });
+      expect(result).toEqual({
+        message: 'Cette route est réservée aux instructeurs et admins',
+      });
     });
   });
-}); 
+});
