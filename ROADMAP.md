@@ -90,10 +90,12 @@
 **Description:** Mise en place de la base de données et des entités principales
 
 1. Configuration TypeORM
-   - [ ] Configuration de la connexion PostgreSQL
-   - [ ] Configuration des migrations
-   - [ ] Tests de connexion
-   - [ ] Documentation technique
+   - [x] Configuration de la connexion PostgreSQL
+   - [x] Configuration des migrations
+   - [x] Tests de connexion
+   - [x] Tests des migrations
+   - [x] Documentation technique
+   - [x] Documentation des commandes
 
 2. Entités de Base
    - [ ] Entité User (Base commune)
