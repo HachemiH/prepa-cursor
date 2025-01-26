@@ -19,8 +19,25 @@
 
 ## Scripts de Base de Données
 
-- `pnpm migrate` : Lance les migrations en attente
-- `pnpm migrate:create [name]` : Crée une nouvelle migration
-- `pnpm migrate:revert` : Annule la dernière migration
-- `pnpm seed` : Remplit la base de données avec des données de test
-- `pnpm cleanup` : Nettoie la base de données (⚠️ Supprime toutes les données)
+### Migrations TypeORM
+
+- `pnpm migration:generate nom-migration` : Génère une nouvelle migration à partir des changements d'entités
+  - Exemple : `pnpm migration:generate create-users-table`
+  - Crée un fichier horodaté dans `src/migrations/`
+  - Analyse les différences entre les entités et la base de données
+
+- `pnpm migration:run` : Exécute les migrations en attente
+  - Met à jour le schéma de la base de données
+  - Enregistre les migrations exécutées dans la table `migrations`
+  - Affiche les logs SQL en mode développement
+
+- `pnpm migration:revert` : Annule la dernière migration exécutée
+  - Restaure l'état précédent de la base de données
+  - Supprime l'entrée de la table `migrations`
+  - À utiliser avec précaution en production
+
+### Autres Scripts Base de Données
+
+- `pnpm db:seed` : Remplit la base de données avec des données de test
+- `pnpm db:cleanup` : Nettoie la base de données (⚠️ Supprime toutes les données)
+- `pnpm db:reset` : Réinitialise la base de données (cleanup + seed)
