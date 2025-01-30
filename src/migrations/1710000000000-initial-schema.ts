@@ -134,26 +134,50 @@ export class InitialSchema1710000000000 implements MigrationInterface {
     `);
 
     // Indexes pour les clés étrangères
-    await queryRunner.query(`CREATE INDEX "idx_student_user" ON "${schema}"."students"("userId")`);
-    await queryRunner.query(`CREATE INDEX "idx_instructor_user" ON "${schema}"."instructors"("userId")`);
-    await queryRunner.query(`CREATE INDEX "idx_course_instructor" ON "${schema}"."courses"("instructorId")`);
-    await queryRunner.query(`CREATE INDEX "idx_module_course" ON "${schema}"."modules"("courseId")`);
-    await queryRunner.query(`CREATE INDEX "idx_progress_student" ON "${schema}"."course_progress"("studentId")`);
-    await queryRunner.query(`CREATE INDEX "idx_progress_module" ON "${schema}"."course_progress"("moduleId")`);
-    await queryRunner.query(`CREATE INDEX "idx_student_courses_student" ON "${schema}"."student_courses"("studentId")`);
-    await queryRunner.query(`CREATE INDEX "idx_student_courses_course" ON "${schema}"."student_courses"("courseId")`);
+    await queryRunner.query(
+      `CREATE INDEX "idx_student_user" ON "${schema}"."students"("userId")`,
+    );
+    await queryRunner.query(
+      `CREATE INDEX "idx_instructor_user" ON "${schema}"."instructors"("userId")`,
+    );
+    await queryRunner.query(
+      `CREATE INDEX "idx_course_instructor" ON "${schema}"."courses"("instructorId")`,
+    );
+    await queryRunner.query(
+      `CREATE INDEX "idx_module_course" ON "${schema}"."modules"("courseId")`,
+    );
+    await queryRunner.query(
+      `CREATE INDEX "idx_progress_student" ON "${schema}"."course_progress"("studentId")`,
+    );
+    await queryRunner.query(
+      `CREATE INDEX "idx_progress_module" ON "${schema}"."course_progress"("moduleId")`,
+    );
+    await queryRunner.query(
+      `CREATE INDEX "idx_student_courses_student" ON "${schema}"."student_courses"("studentId")`,
+    );
+    await queryRunner.query(
+      `CREATE INDEX "idx_student_courses_course" ON "${schema}"."student_courses"("courseId")`,
+    );
 
     // Index pour la recherche par email (case insensitive)
-    await queryRunner.query(`CREATE INDEX "idx_user_email_lower" ON "${schema}"."users" (LOWER(email))`);
+    await queryRunner.query(
+      `CREATE INDEX "idx_user_email_lower" ON "${schema}"."users" (LOWER(email))`,
+    );
 
     // Index pour la recherche de cours publiés
-    await queryRunner.query(`CREATE INDEX "idx_course_published" ON "${schema}"."courses"("isPublished")`);
+    await queryRunner.query(
+      `CREATE INDEX "idx_course_published" ON "${schema}"."courses"("isPublished")`,
+    );
 
     // Index pour la recherche par expertise
-    await queryRunner.query(`CREATE INDEX "idx_instructor_expertise" ON "${schema}"."instructors" USING GIN ("expertise")`);
+    await queryRunner.query(
+      `CREATE INDEX "idx_instructor_expertise" ON "${schema}"."instructors" USING GIN ("expertise")`,
+    );
 
     // Index pour la recherche par centres d'intérêt
-    await queryRunner.query(`CREATE INDEX "idx_student_interests" ON "${schema}"."students" USING GIN ("interests")`);
+    await queryRunner.query(
+      `CREATE INDEX "idx_student_interests" ON "${schema}"."students" USING GIN ("interests")`,
+    );
 
     // Trigger pour mettre à jour updatedAt
     await queryRunner.query(`
@@ -167,7 +191,14 @@ export class InitialSchema1710000000000 implements MigrationInterface {
     `);
 
     // Application du trigger sur toutes les tables
-    const tables = ['users', 'students', 'instructors', 'courses', 'modules', 'course_progress'];
+    const tables = [
+      'users',
+      'students',
+      'instructors',
+      'courses',
+      'modules',
+      'course_progress',
+    ];
     for (const table of tables) {
       await queryRunner.query(`
         CREATE TRIGGER update_${table}_updated_at
@@ -184,17 +215,32 @@ export class InitialSchema1710000000000 implements MigrationInterface {
     const schema = schemaResult[0].current_schema;
 
     // Suppression des triggers
-    const tables = ['users', 'students', 'instructors', 'courses', 'modules', 'course_progress'];
+    const tables = [
+      'users',
+      'students',
+      'instructors',
+      'courses',
+      'modules',
+      'course_progress',
+    ];
     for (const table of tables) {
-      await queryRunner.query(`DROP TRIGGER IF EXISTS update_${table}_updated_at ON "${schema}"."${table}"`);
+      await queryRunner.query(
+        `DROP TRIGGER IF EXISTS update_${table}_updated_at ON "${schema}"."${table}"`,
+      );
     }
 
     // Suppression de la fonction trigger
-    await queryRunner.query(`DROP FUNCTION IF EXISTS ${schema}.update_updated_at_column`);
+    await queryRunner.query(
+      `DROP FUNCTION IF EXISTS ${schema}.update_updated_at_column`,
+    );
 
     // Suppression des tables dans l'ordre inverse de leur création
-    await queryRunner.query(`DROP TABLE IF EXISTS "${schema}"."student_courses"`);
-    await queryRunner.query(`DROP TABLE IF EXISTS "${schema}"."course_progress"`);
+    await queryRunner.query(
+      `DROP TABLE IF EXISTS "${schema}"."student_courses"`,
+    );
+    await queryRunner.query(
+      `DROP TABLE IF EXISTS "${schema}"."course_progress"`,
+    );
     await queryRunner.query(`DROP TABLE IF EXISTS "${schema}"."modules"`);
     await queryRunner.query(`DROP TABLE IF EXISTS "${schema}"."courses"`);
     await queryRunner.query(`DROP TABLE IF EXISTS "${schema}"."instructors"`);
@@ -202,7 +248,9 @@ export class InitialSchema1710000000000 implements MigrationInterface {
     await queryRunner.query(`DROP TABLE IF EXISTS "${schema}"."users"`);
 
     // Suppression des énumérations
-    await queryRunner.query(`DROP TYPE IF EXISTS "${schema}"."student_level_enum"`);
+    await queryRunner.query(
+      `DROP TYPE IF EXISTS "${schema}"."student_level_enum"`,
+    );
     await queryRunner.query(`DROP TYPE IF EXISTS "${schema}"."user_role_enum"`);
   }
 }
