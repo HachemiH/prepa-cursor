@@ -2,64 +2,38 @@ import { test, expect } from '@playwright/test';
 import { UserRole } from '../../src/modules/users/enums/user-role.enum';
 
 test.describe('Roles API', () => {
-  const API_URL = 'http://localhost:3000';
+  test('GET /roles devrait retourner la liste des rôles sans authentification', async ({
+    request,
+  }) => {
+    const response = await request.get('/roles');
+    expect(response.ok()).toBeTruthy();
 
-  test.describe('GET /roles', () => {
-    test('devrait retourner la liste des rôles sans authentification', async ({ request }) => {
-      const response = await request.get(`${API_URL}/roles`);
-      expect(response.ok()).toBeTruthy();
-      
-      const roles = await response.json();
-      expect(roles).toEqual(expect.arrayContaining(Object.values(UserRole)));
-      expect(roles.length).toBe(Object.values(UserRole).length);
-    });
+    const body = await response.json();
+    expect(body).toEqual(Object.values(UserRole));
+    expect(body).toContain(UserRole.STUDENT);
+    expect(body).toContain(UserRole.INSTRUCTOR);
+    expect(body).toContain(UserRole.ADMIN);
+    expect(body).toContain(UserRole.BANNED);
   });
 
-  // TODO: v0.3.0 - Ces tests nécessitent l'authentification
+  /**
+   * Les tests suivants sont reportés à la version 0.3.0
+   * car ils nécessitent l'authentification qui n'est pas encore implémentée
+   */
   /*
-  test.describe('PATCH /roles/users/:id', () => {
-    test('devrait rejeter la requête sans authentification', async ({ request }) => {
-      const response = await request.patch(`${API_URL}/roles/users/123`, {
-        data: { role: UserRole.INSTRUCTOR }
-      });
-      expect(response.status()).toBe(401);
+  test('PATCH /roles/users/:id devrait rejeter les requêtes sans authentification', async ({ request }) => {
+    const response = await request.patch('/roles/users/1', {
+      data: { role: UserRole.INSTRUCTOR },
     });
+    expect(response.status()).toBe(401);
+  });
 
-    test('devrait rejeter la requête avec un utilisateur non admin', async ({ request }) => {
-      const response = await request.patch(`${API_URL}/roles/users/123`, {
-        data: { role: UserRole.INSTRUCTOR },
-        headers: {
-          'Authorization': 'Bearer student-token'
-        }
-      });
-      expect(response.status()).toBe(403);
-    });
+  test('PATCH /roles/users/:id devrait rejeter les requêtes des utilisateurs non-admin', async ({ request }) => {
+    // TODO: Implémenter avec l'authentification dans v0.3.0
+  });
 
-    test('devrait permettre à un admin de changer le rôle d\'un utilisateur', async ({ request }) => {
-      const response = await request.patch(`${API_URL}/roles/users/123`, {
-        data: { role: UserRole.INSTRUCTOR },
-        headers: {
-          'Authorization': 'Bearer admin-token'
-        }
-      });
-      expect(response.ok()).toBeTruthy();
-      
-      const data = await response.json();
-      expect(data).toEqual({
-        message: 'Rôle mis à jour avec succès',
-        role: UserRole.INSTRUCTOR
-      });
-    });
-
-    test('devrait rejeter une transition de rôle invalide', async ({ request }) => {
-      const response = await request.patch(`${API_URL}/roles/users/123`, {
-        data: { role: UserRole.ADMIN },
-        headers: {
-          'Authorization': 'Bearer admin-token'
-        }
-      });
-      expect(response.status()).toBe(403);
-    });
+  test('PATCH /roles/users/:id devrait permettre à un admin de changer le rôle d\'un utilisateur', async ({ request }) => {
+    // TODO: Implémenter avec l'authentification dans v0.3.0
   });
   */
-}); 
+});
