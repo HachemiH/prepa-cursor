@@ -11,7 +11,10 @@ export class RoleValidationService {
     }
 
     // Un ADMIN ne peut pas devenir STUDENT ou INSTRUCTOR
-    if (user.role === UserRole.ADMIN && (newRole === UserRole.STUDENT || newRole === UserRole.INSTRUCTOR)) {
+    if (
+      user.role === UserRole.ADMIN &&
+      (newRole === UserRole.STUDENT || newRole === UserRole.INSTRUCTOR)
+    ) {
       return false;
     }
 
@@ -29,12 +32,15 @@ export class RoleValidationService {
       // Seuls les ADMIN peuvent être SUPER_ADMIN
       return user.role === UserRole.ADMIN;
     }
-    
+
     // N'importe quel rôle peut avoir isSuperAdmin à false
     return true;
   }
 
-  validateRequiredRoles(user: UserEntity, requiredRoles: UserRole[] | 'PUBLIC' | 'SUPER_ADMIN_ONLY'): boolean {
+  validateRequiredRoles(
+    user: UserEntity,
+    requiredRoles: UserRole[] | 'PUBLIC' | 'SUPER_ADMIN_ONLY',
+  ): boolean {
     // Les routes publiques sont accessibles à tous
     if (requiredRoles === 'PUBLIC') {
       return true;
@@ -58,4 +64,4 @@ export class RoleValidationService {
     // Vérification des rôles requis
     return Array.isArray(requiredRoles) && requiredRoles.includes(user.role);
   }
-} 
+}

@@ -10,4 +10,4 @@ import { RoleValidationService } from './services/role-validation.service';
   providers: [RoleValidationService],
   exports: [RoleValidationService],
 })
-export class UsersModule {} 
+export class UsersModule {}

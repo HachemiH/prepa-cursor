@@ -33,4 +33,4 @@ export class TestController {
   getInstructorOrAdmin() {
     return { message: 'Cette route est réservée aux instructeurs et admins' };
   }
-} 
+}
