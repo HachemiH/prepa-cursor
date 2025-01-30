@@ -3,4 +3,4 @@ export enum StudentLevel {
   INTERMEDIATE = 'INTERMEDIATE',
   ADVANCED = 'ADVANCED',
   EXPERT = 'EXPERT',
-} 
+}

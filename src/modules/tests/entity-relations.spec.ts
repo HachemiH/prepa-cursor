@@ -9,7 +9,7 @@ import { UserRole } from '../users/enums/user-role.enum';
 
 describe('Relations entre entités', () => {
   describe('Relations Student', () => {
-    it('devrait pouvoir s\'inscrire à plusieurs cours', () => {
+    it("devrait pouvoir s'inscrire à plusieurs cours", () => {
       const student = new StudentEntity();
       const user = new UserEntity();
       user.email = 'student@example.com';
@@ -92,7 +92,7 @@ describe('Relations entre entités', () => {
       user.role = UserRole.INSTRUCTOR;
       user.isActive = true;
       instructor.user = user;
-      instructor.bio = 'Bio de l\'instructeur';
+      instructor.bio = "Bio de l'instructeur";
       instructor.expertise = ['JavaScript', 'TypeScript'];
       instructor.rating = 4.5;
 
@@ -183,4 +183,4 @@ describe('Relations entre entités', () => {
       expect(module2.course).toBe(course);
     });
   });
-}); 
+});
