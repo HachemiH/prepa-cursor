@@ -10,4 +10,4 @@ describe('Test de base', () => {
     expect(mockFn()).toBe('test');
     expect(mockFn).toHaveBeenCalled();
   });
-}); 
+});
