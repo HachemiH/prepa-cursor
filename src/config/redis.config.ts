@@ -20,4 +20,4 @@ const redisConfig: CacheModuleOptions = {
   ttl: 60 * 60 * 24, // 24 heures par défaut
 };
 
-export default redisConfig; 
+export default redisConfig;

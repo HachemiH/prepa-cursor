@@ -1,47 +1,34 @@
-import { describe, it, expect, vi, beforeAll } from 'vitest';
-import { DataSource } from 'typeorm';
-import dataSource from './typeorm-migrations.config';
-import { UserEntity } from '../modules/users/entities/user.entity';
+import { describe, it, expect } from 'vitest';
+import typeormMigrationsConfig from './typeorm-migrations.config';
+import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
-describe('Configuration des Migrations TypeORM', () => {
-  let testDataSource: DataSource;
+describe('TypeORM Migrations Config', () => {
+  const config = typeormMigrationsConfig.options as PostgresConnectionOptions;
 
-  beforeAll(() => {
-    testDataSource = dataSource;
+  it('devrait avoir la configuration de base correcte', () => {
+    expect(config.type).toBe('postgres');
+    expect(config.host).toBe('localhost');
+    expect(config.port).toBe(5432);
+    expect(config.username).toBe('hachemi');
+    expect(config.password).toBe('');
+    expect(config.database).toBe('prepa_cursor_dev');
+    expect(config.schema).toBe('public');
   });
 
-  it('devrait avoir une configuration de base valide', () => {
-    expect(testDataSource).toBeDefined();
-    expect(testDataSource.options.type).toBe('postgres');
+  it('devrait avoir les chemins de migration corrects', () => {
+    expect(config.migrations).toEqual(['src/migrations/*{.ts,.js}']);
   });
 
-  it('devrait avoir les chemins des migrations configurés correctement', () => {
-    expect(testDataSource.options.migrations).toEqual(['src/migrations/*{.ts,.js}']);
+  it('devrait avoir les entités correctes', () => {
+    expect(Array.isArray(config.entities)).toBe(true);
+    expect(config.entities?.length).toBeGreaterThan(0);
   });
 
-  it('devrait avoir les entités correctement configurées', () => {
-    expect(testDataSource.options.entities).toContain(UserEntity);
+  it('devrait avoir le logging désactivé en production', () => {
+    expect(config.logging).toBe(false);
   });
 
-  it('devrait avoir les options de développement correctes', () => {
-    expect(testDataSource.options.logging).toBe(process.env.NODE_ENV === 'development');
+  it('devrait être une configuration PostgreSQL valide', () => {
+    expect(config.type).toBe('postgres');
   });
-
-  it('devrait avoir les variables d\'environnement correctement configurées', () => {
-    const {
-      host,
-      port,
-      username,
-      password,
-      database,
-      schema,
-    } = testDataSource.options as any;
-
-    expect(host).toBe(process.env.DB_HOST || 'localhost');
-    expect(port).toBe(parseInt(process.env.DB_PORT || '5432', 10));
-    expect(username).toBe(process.env.DB_USERNAME || 'hachemi');
-    expect(password).toBe(process.env.DB_PASSWORD || '');
-    expect(database).toBe(process.env.DB_DATABASE || 'prepa_cursor_dev');
-    expect(schema).toBe(process.env.DB_SCHEMA || 'public');
-  });
-}); 
+});

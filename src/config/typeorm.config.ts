@@ -1,11 +1,11 @@
 /**
  * Configuration TypeORM pour la connexion à la base de données PostgreSQL
- * 
+ *
  * Cette configuration est utilisée par le module TypeORM de NestJS pour :
  * - Établir la connexion à la base de données
  * - Gérer les entités et leurs relations
  * - Exécuter les migrations
- * 
+ *
  * Variables d'environnement requises :
  * - DB_HOST : Hôte de la base de données (défaut: localhost)
  * - DB_PORT : Port de la base de données (défaut: 5432)
@@ -14,11 +14,11 @@
  * - DB_DATABASE : Nom de la base de données (défaut: prepa_cursor_dev)
  * - DB_SCHEMA : Schéma de la base de données (défaut: public)
  * - NODE_ENV : Environnement d'exécution (défaut: development)
- * 
+ *
  * En mode développement (NODE_ENV=development) :
  * - synchronize: true (ATTENTION: à désactiver en production)
  * - logging: true (logs SQL activés)
- * 
+ *
  * Chemins des fichiers :
  * - Entités : "dist/**\/*.entity.{ts,js}"
  * - Migrations : "dist/migrations/*.{ts,js}"
@@ -53,4 +53,4 @@ const typeormConfig: PostgresConnectionOptions = {
   logging: false,
 };
 
-export default typeormConfig; 
+export default typeormConfig;

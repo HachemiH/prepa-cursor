@@ -27,4 +27,4 @@ const dataSource = new DataSource({
   logging: NODE_ENV === 'development',
 } as DataSourceOptions);
 
-export default dataSource; 
+export default dataSource;

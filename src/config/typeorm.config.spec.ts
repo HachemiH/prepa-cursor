@@ -49,4 +49,4 @@ describe('TypeORM Configuration', () => {
       expect(typeormConfig.logging).toBe(false);
     }
   });
-}); 
+});
