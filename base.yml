@@ -1,0 +1,111 @@
+# espanso match file
+
+# For a complete introduction, visit the official docs at: https://espanso.org/docs/
+
+# You can use this file to define the base matches (aka snippets)
+# that will be available in every application when using espanso.
+
+# Matches are substitution rules: when you type the "trigger" string
+# it gets replaced by the "replace" string.
+matches:
+  # Simple text replacement
+  - trigger: ":espanso"
+    replace: "~/Library/'Application Support'/espanso/match" # NOTE: espanso uses YAML to define matches, so pay attention to the indentation!
+
+  # But matches can also be dynamic:
+
+  # Print the current date
+  - trigger: ":date"
+    replace: "{{mydate}}"
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%d/%m/%Y"
+
+  # Print the output of a shell command
+  - trigger: ":shell"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "echo 'Hello from your shell'"
+
+  # And much more! For more information, visit the docs: https://espanso.org/docs/
+
+  - trigger: ":mail"
+    replace: "monmail@protonmail.com"
+
+  - trigger: ":adresse"
+    replace: "mon adresse ici"
+
+  - trigger: ":nopropose"
+    replace: "ne me propose rien tant que je ne te le demande pas explicitement, tu ne fais que confirmer ce que tu as compris, et si tu ne comprends pas quelque chose tu me demande des précisions."
+
+  - trigger: ":risen"
+    replace: "J'aimerai que tu me propose un prompt de démarrage avec la méthode RISEN (role, instructions, steps, end-goal, narrowing) pour la création de"
+
+  - trigger: ":logsapi"
+    replace: "docker logs api -f"
+
+  - trigger: ":debugtests"
+    replace: "Je veux que tu débug ces tests qui fails, je veux que tu te focus sur le premier qui fail et tu ne fais rien d'autre que trouver des solutions de le passer en vert. Une fois qu'on a passé un test en vert on refait les test e2e qui sont important. Point extrêmement important : je ne veux pas entendre parler de Jest, nous sommes exclusivement sur Vitest. Je veux que tu analyse en profondeur le code et prends le nombre d'étapes nécessaires pour réussir. Soit analytique, progressif et ne néglige aucun détail. Dernière chose nous sommes sur PNPM. Je veux que tu respecte les bests practices et les recommandations de NestJS."
+  
+  - trigger: ":prio"
+    replace: "Fais ce qui te semble prioritaire"
+
+  - trigger: ":commit"
+    replace: "Fais un git status pour checker l'état du repository, fais des git diff en n'oubliant de pipe tes commandes interactives, ensuite fais des commits atomique en respectant les conventions de commit, surtout les messages en français"
+
+  - trigger: ":lint"
+    replace: "1. tu lint, 2. tu corrige la premiere erreur, 3. tu test cette correction (unit + e2e), 4. si tout passe au vert tu commit sinon tu continue à fixer, 5. tu refais un lint, 6. erreur suivante, etc …"
+
+  - trigger: ":tests"
+    replace: "zsh -i -c 'pnpm lint && pnpm test && pnpm test:e2e'"
+
+  - trigger: ":pipe"
+    replace: "Pipe tes commandes interactives, le terminal bug dans l'interface"
+
+  - trigger: ":audit"
+    replace: "Je veux que tu analyse d'abord le fichier .cursorrules (qui t'es destiné) ensuite la roadmap. Une fois que tu as fais cela et que tu as pris connaissance de tout ce que tu dois savoir en particulier de la stack utilisée, je veux que tu fasse un audit en profondeur du projet, pour vérifier que le contenu correspond à nos conventions et aux recommandations et bests practices dans le monde NestJS. Je veux que tu vérifie s'il n'y a pas de redondances inutiles ou autres choses qui peuvent être facilement corrigée. Ne te lance dans des modifications sans m'expliquer les tenants et aboutissants et demander mon avis avant de commencer l'édition."
+
+
+  - trigger: ":source"
+    replace: "Source le terminal il bug dans ton interface avant cette commande. Dans la même commande."
+
+  - trigger: ":issue"
+    replace: "gh issue edit 39 -F ROADMAP.md | cat"
+
+  - trigger: ":reset"
+    replace: "source ~/.zshrc && git reset --hard HEAD && git clean -fd && pnpm db:reset"
+
+  - trigger: ":noenv"
+    replace: "Je ne veux pas d'autre environnement que celui-ci start:dev, ni d'autre bdd que celle-ci fimaris, ni d'autres librairie que celles installées. Je ne veux pas de Jest ni de nestjs/testing ni rien d'autre que Vitest pour les tests unitaires et Playwright pour les e2e."
+
+  - trigger: ":cloture"
+    replace: "Cloture cette feature avec la commande gitflow"
+
+  - trigger: ":gitflow"
+    replace: "Je veux qu'on travaille selon mes exigences présentes sur .cursorrules, en travaillant sur des branches feature, en utilisant les commandes gitflow. Merci de respecter cela et ne dévie pas de ces exigences tant que je ne te le demande pas spécifiquement."
+
+  - trigger: ":isole"
+    replace: "Je veux que tu isole le premier test qui échoue en ligne de commande avec grep et que tu te concentre uniquement sur lui pour le faire passer au vert, mais tu dois respecter l'architecture en place, les recommandations officielles de NestJS et les bests practices de développement. Je veux que tu travaille exclusivement sur Vitest pour les tests unitaires, et Playwright pour les tests e2e."
+
+  - trigger: ":best"
+    replace: "Est-ce que tu dis là est cohérent avec les recommandations officielles de NestJS et des bests practices de dévelopement ?"
+
+  - trigger: ":imple"
+    replace: "Maintenant nous allons passer à l'implémentation de , mais tu ne t'occupes pas des tests, tu ne t'occupes que du code et on test avec Curl, interdiction formelle d'insérer des régressions ou de casser ce qui fonctionne déjà. Comment comptes-tu implémenter cela ? Ne fais rien juste donne-moi ton plan et attends que je te le valide. Ce plan doit absolument respecter les recommandations officielles de Nestjs et les bests practices du dev."
+
+  - trigger: ":recos"
+    replace: "Est-ce que tu propose est cohérent avec les recommandations officielles de NestJS et de best practices de dev ?"
+
+  - trigger: ":regre"
+    replace: "Interdiction formelle d'introduire des régression et de casser ce qui existe, tu te débrouille mais tu fais attention, agis de façon atomique, analytique et méthodique. Tu test à chaque étape pour t'assure que tu ne casse rien."
+
+  - trigger: ":aud"
+    replace: "Effectuer un audit complet du projet NestJS existant en suivant les meilleures pratiques et recommandations NestJS, tout en respectant strictement les conventions définies dans .cursorrules.\n\nObjectif : Réaliser un audit détaillé pour identifier et corriger toutes les non-conformités.\n\nTâches à réaliser :\n1. Vérification de la conformité NestJS :\n   - Vérifier que le projet utilise une architecture modulaire claire :\n     - Chaque domaine possède son propre module.\n     - Les contrôleurs sont bien organisés et respectent les routes associées.\n     - Les services gèrent correctement la logique métier.\n   - Valider l’utilisation correcte des DTOs avec class-validator pour toutes les entrées utilisateur.\n   - S’assurer que les entités utilisent TypeORM de manière appropriée.\n   - Vérifier les services partagés et globaux (exemple : guards, interceptors).\n\n2. Validation des conventions de développement :\n   - Respect strict des conventions TypeScript définies :\n     - Types explicites pour toutes les variables, fonctions et retours.\n     - Pas d’utilisation de any.\n     - Classes courtes (< 200 lignes) et respectant les principes SOLID.\n     - Noms conformes à la nomenclature décrite.\n   - S’assurer que le code suit une organisation propre et modulaire.\n   - Valider que les DTOs ne sont utilisés que pour les entrées API.\n\n3. Test et couverture :\n   - S’assurer que tous les tests respectent :\n     - Le framework Vitest (pas de Jest ou autre).\n     - La structure Arrange → Act → Assert.\n   - Vérifier la présence de tests unitaires, d’intégration et E2E pour chaque module :\n     - Tests des services, contrôleurs et garde-fous.\n     - Couverture des cas d’erreur et des cas limites.\n     - Respect des fichiers de test spécialisés si nécessaires (e.g., *.spec.ts, *.auth.spec.ts).\n\n4. Validation des commits et GitFlow :\n   - Travailler sur des branches **feature/** pour chaque correction identifiée.\n   - Les corrections doivent être engagées avec des **commits atomiques**.\n   - Valider les commits UNIQUEMENT après avoir vérifié que tous les tests passent au vert.\n   - Respecter le format de commit strict : type(scope): subject.\n   - Types autorisés : feat, fix, docs, style, refactor, perf, test, chore.\n\n5. Standardisation des réponses API :\n   - Valider que toutes les réponses suivent le format :\n     interface ApiResponse<T> {\n       message: string;\n       data?: T;\n       statusCode: number;\n     }\n   - Vérifier que les erreurs sont normalisées et explicites.\n\nAction attendue :\n1. Identifier toutes les non-conformités.\n2. Créer une branche feature pour chaque correction.\n3. Implémenter directement les correctifs nécessaires.\n4. Ajouter ou compléter les tests manquants.\n5. Effectuer des commits atomiques une fois les tests passés au vert.\n6. S’assurer que toutes les modifications respectent la roadmap en cours.\n\nContraintes :\n- Aucun écart par rapport aux règles définies dans .cursorrules.\n- Refuser toute action ou correction qui enfreindrait ces règles.\n- Valider systématiquement chaque changement avec des tests."
+
+  - trigger: ':hello'
+    replace: 'hello world'
